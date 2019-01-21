@@ -201,8 +201,14 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>de.edirom.meigarage..mei</groupId>
+      <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-xsl-converter</artifactId>
+      <version>0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.edirom.meigarage</groupId>
+      <artifactId>mei-validator</artifactId>
       <version>0.1</version>
       <scope>compile</scope>
     </dependency>

@@ -3,6 +3,8 @@ package pl.psnc.dl.ege.webapp.request;
 import pl.psnc.dl.ege.types.DataType;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 public class CustomizationRequestResolver extends RequestResolver {
     public static final String CUSTOMIZATION_SLICE_BASE = "Customization/";
@@ -35,9 +37,24 @@ public class CustomizationRequestResolver extends RequestResolver {
             throws RequestResolvingException
     {
         String[] queries = resolveQueries();
-        if(queries.length > 1){
-            DataType dataType = decodeDataType(queries[1]);
-            data = dataType;
+        if(queries.length > 2){
+            String id = null;
+            String source = null;
+            String customization = null;
+            String outputFormat = null;
+
+            try {
+                id = URLDecoder.decode(queries[0], "UTF-8");
+                source = URLDecoder.decode(queries[1], "UTF-8");
+                customization = URLDecoder.decode(queries[2], "UTF-8");
+                outputFormat = URLDecoder.decode(queries[3], "UTF-8");
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                throw new RequestResolvingException(RequestResolvingException.Status.BAD_REQUEST);
+            }
+
+            data = new String[]{id, source, customization, outputFormat};
             operation = OperationId.PERFORM_CUSTOMIZATION;
         }
         else{

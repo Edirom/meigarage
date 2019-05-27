@@ -3,6 +3,7 @@ package pl.psnc.dl.ege.webapp.servlet;
 import org.apache.log4j.Logger;
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
+import pl.psnc.dl.ege.exception.CustomizationException;
 import pl.psnc.dl.ege.types.CustomizationSetting;
 import pl.psnc.dl.ege.types.CustomizationSourceInputType;
 import pl.psnc.dl.ege.types.DataType;
@@ -120,11 +121,10 @@ public class CustomizationServlet extends HttpServlet {
         try {
             RequestResolver rr = new CustomizationRequestResolver(request,
                     Method.POST);
-            DataType dt = (DataType) rr.getData();
-            performValidation(dt, rr, response);
+            String[] cs = (String[]) rr.getData();
+            performCustomization(cs, rr, response);
         }
         catch (RequestResolvingException ex) {
-            //TODO: zastanowic sie nad sytuacja, gdy request jest nieprawidlowo sparsowany
             if (ex.getStatus().equals(
                     RequestResolvingException.Status.BAD_REQUEST)) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -142,46 +142,12 @@ public class CustomizationServlet extends HttpServlet {
     }
 
     /*
-     * Performs validation and prints its results into the response.
+     * Performs customization.
      */
-    /*private void performCustomization(DataType dt, RequestResolver rr,
+    private void performCustomization(String[] cs, RequestResolver rr,
                                    HttpServletResponse response)
             throws Exception
     {
-        EGE ege = new EGEImpl();
-        InputStream is = null;
-        if (ServletFileUpload.isMultipartContent(rr.getRequest())) {
-            try {
-                ServletFileUpload upload = new ServletFileUpload();
-                FileItemIterator iter = upload.getItemIterator(rr.getRequest());
-                while (iter.hasNext()) {
-                    FileItemStream item = iter.next();
-                    if (!item.isFormField()) {
-                        is = item.openStream();
-                        //perform validation and print result to response.
-                        ValidationResult result = ege.performValidation(is, dt);
-                        printValidationResult(response,result);
-                        is.close();
-                    }
-                }
-            }
-            catch(ValidatorException ex){
-                throw ex;
-            }
-            catch (Exception ex) {
-                LOGGER.error(ex.getMessage(), ex);
-                throw ex;
-            }
-            finally {
-                if (is != null) {
-                    try {
-                        is.close();
-                    }
-                    catch (IOException ex) {
-                        //ignore
-                    }
-                }
-            }
-        }
-    }*/
+        LOGGER.info("performCustomization " + cs[0] + " with " + cs[1] + " and " + cs[2] + " to " + cs[3]);
+    }
 }

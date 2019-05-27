@@ -182,24 +182,24 @@
       <version>0.3</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>pl.psnc.dl.ege</groupId>
       <artifactId>ege-xsl-converter</artifactId>
       <version>0.4</version>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
+    </dependency>-->
+    <!--<dependency>
       <groupId>pl.psnc.dl.ege.tei</groupId>
       <artifactId>tei-converter</artifactId>
       <version>0.5</version>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
+    </dependency>-->
+    <!--<dependency>
       <groupId>uk.ac.ox.oucs.oxgarage.oo</groupId>
       <artifactId>oo-converter</artifactId>
       <version>1.0</version>
       <scope>compile</scope>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-xsl-converter</artifactId>
@@ -210,6 +210,18 @@
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-validator</artifactId>
       <version>0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.edirom.meigarage</groupId>
+      <artifactId>mei-verovio-converter</artifactId>
+      <version>0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.edirom.meigarage</groupId>
+      <artifactId>mei-customization</artifactId>
+      <version>0.5.0</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

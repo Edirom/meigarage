@@ -34,6 +34,19 @@
 		  <param-value>WEB-INF/lib/oxgarage.properties</param-value>
 		</init-param>	
 	</servlet>
+	<servlet>
+		<description>
+			Serves request for customizations of schemas
+		</description>
+		<display-name>CustomizationServlet</display-name>
+		<servlet-name>CustomizationServlet</servlet-name>
+		<servlet-class>
+			pl.psnc.dl.ege.webapp.servlet.CustomizationServlet</servlet-class>
+		<init-param>
+			<param-name>oxgarageproperties</param-name>
+			<param-value>WEB-INF/lib/oxgarage.properties</param-value>
+		</init-param>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>ConversionServlet</servlet-name>
 		<url-pattern>/Conversions/*</url-pattern>
@@ -41,6 +54,10 @@
 	<servlet-mapping>
 		<servlet-name>ValidationServlet</servlet-name>
 		<url-pattern>/Validation/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CustomizationServlet</servlet-name>
+		<url-pattern>/Customization/*</url-pattern>
 	</servlet-mapping>
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>

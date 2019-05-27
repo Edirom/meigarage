@@ -31,6 +31,15 @@ public enum OperationId {
 	/**
 	 * Identify validation operation
 	 */
-	PERFORM_VALIDATION
-	
+	PERFORM_VALIDATION,
+
+	/**
+	 * Express information on available customization settings
+	 */
+	PRINT_CUSTOMIZATIONS,
+
+	/**
+	 * Customization operation
+	 */
+	PERFORM_CUSTOMIZATION
 }

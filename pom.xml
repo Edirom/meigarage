@@ -212,12 +212,12 @@
       <version>0.1</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-verovio-converter</artifactId>
       <version>0.1</version>
       <scope>compile</scope>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-customization</artifactId>

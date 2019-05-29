@@ -144,10 +144,54 @@ public class CustomizationServlet extends HttpServlet {
     /*
      * Performs customization.
      */
-    private void performCustomization(String[] cs, RequestResolver rr,
-                                   HttpServletResponse response)
-            throws Exception
+    private void performCustomization(String[] csString, RequestResolver rr,
+                                   HttpServletResponse response) throws Exception
     {
-        LOGGER.info("performCustomization " + cs[0] + " with " + cs[1] + " and " + cs[2] + " to " + cs[3]);
+        String usedCS = csString[0];
+        String usedSource = csString[1];
+        String usedCustomization = csString[2];
+        String usedOutputFormat = csString[3];
+
+        EGE ege = new EGEImpl();
+        Set<CustomizationSetting> css = ((EGEImpl) ege).returnSupportedCustomizationSettings();
+        CustomizationSetting cs = null;
+
+        for(CustomizationSetting c : css) {
+            if(c.getFormat() == usedCS) {
+                cs = c;
+                break;
+            }
+        }
+
+        if(cs == null)
+            throw new CustomizationException(); //TODO: Better error handling
+
+        CustomizationSourceInputType source = null;
+        for(CustomizationSourceInputType i : cs.getSources()) {
+            if(i.getId() == usedSource) {
+                source = i;
+                break;
+            }
+        }
+
+        if(source == null)
+            throw new CustomizationException(); //TODO: Better error handling
+
+        CustomizationSourceInputType customization = null;
+        for(CustomizationSourceInputType i : cs.getCustomizations()) {
+            if(i.getId() == usedCustomization) {
+                customization = i;
+                break;
+            }
+        }
+
+        if(customization == null)
+            throw new CustomizationException(); //TODO: Better error handling
+
+        if(source.getType() == CustomizationSourceInputType.TYPE_SERVER_FILE &&
+        customization.getType() == CustomizationSourceInputType.TYPE_SERVER_FILE)
+
+            ((EGEImpl) ege).performCustomization(cs, usedSource, usedCustomization, usedOutputFormat, response.getOutputStream());
+
     }
 }

@@ -1,16 +1,19 @@
 package pl.psnc.dl.ege.webapp.request;
 
-import pl.psnc.dl.ege.types.DataType;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Arrays;
 
 public class CustomizationRequestResolver extends RequestResolver {
-    public static final String CUSTOMIZATION_SLICE_BASE = "Customization/";
+    public static final String CUSTOMIZATION_SLICE_BASE = "Customization";
 
     private static final String EN = "en";
 
+    private static final Logger LOGGER = Logger
+            .getLogger(CustomizationRequestResolver.class);
 
     public CustomizationRequestResolver(HttpServletRequest request, Method method)
             throws RequestResolvingException
@@ -79,8 +82,8 @@ public class CustomizationRequestResolver extends RequestResolver {
     {
         String params = request.getRequestURL().toString();
         params = (params.endsWith(SLASH) ? params : params + SLASH);
-        params = params.substring(params.indexOf(CUSTOMIZATION_SLICE_BASE),
-                params.length());
+        params = params.replaceFirst(".*" + CUSTOMIZATION_SLICE_BASE + "\\/", "");
+
         String[] queries = params.split(SLASH);
         return queries;
     }

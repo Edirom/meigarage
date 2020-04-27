@@ -220,7 +220,7 @@ public class CustomizationServlet extends HttpServlet {
                 LOGGER.debug("Cannot find customization file");
             }
         }
-        String fileextension = (usedOutputFormat == "RelaxNG"?:".rng":".xml");
+        String fileextension = (usedOutputFormat == "RelaxNG"?".rng":".xml");
 
         response.setHeader("Content-Disposition", "attachment;filename=\"" + filename + fileextension + "\"");
 

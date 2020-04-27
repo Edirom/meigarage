@@ -212,9 +212,20 @@ public class CustomizationServlet extends HttpServlet {
         if(fields.containsKey("customization"))
             localCustomizationFile = fields.get("customization");
 
+        String filename = (usedCustomization.startsWith("c-")?usedCustomization.substring(2):usedCustomization);
+        if(usedCustomization == "c-mei-local") {
+            try {
+                filename = ((File) fields.get("customization")).getName();
+            }catch(Exception e) {
+                LOGGER.debug("Cannot find customization file");
+            }
+        }
+        String fileextension = (usedOutputFormat == "RelaxNG"?:".rng":".xml");
+
+        response.setHeader("Content-Disposition", "attachment;filename=\"" + filename + fileextension + "\"");
+
         LOGGER.warn("Going to perform customization");
 
-        //TODO: response.setHeader("content-disposition", "filename=" + usedCustomization + ".rng");
         ((EGEImpl) ege).performCustomization(cs, source, customization,
                 usedOutputFormat, response.getOutputStream(),
                 localSourceFile, localCustomizationFile);

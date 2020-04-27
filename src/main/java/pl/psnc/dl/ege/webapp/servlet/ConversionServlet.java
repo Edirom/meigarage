@@ -116,6 +116,9 @@ public class ConversionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		LOGGER.warn("doGet conversion servlet");
+
 		try {
 			RequestResolver rr = new ConversionRequestResolver(request,
 					Method.GET);

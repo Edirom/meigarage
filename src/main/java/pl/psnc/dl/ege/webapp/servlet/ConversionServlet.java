@@ -117,8 +117,6 @@ public class ConversionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		LOGGER.warn("doGet conversion servlet");
-
 		try {
 			RequestResolver rr = new ConversionRequestResolver(request,
 					Method.GET);
@@ -448,6 +446,7 @@ public class ConversionServlet extends HttpServlet {
 		boolean isComplex = EGEIOUtils
 		    .isComplexZip(szipFile);
 		response.setContentType(APPLICATION_OCTET_STREAM);
+
 		if (isComplex) {
 		    String fileExt;
 		    if (cpath.getOutputDataType().getMimeType()
@@ -475,8 +474,11 @@ public class ConversionServlet extends HttpServlet {
 		} else {
 		    String fileExt = getMimeExtensionProvider()
 			.getFileExtension(cpath.getOutputDataType().getMimeType());
+
+		    response.setContentType(cpath.getOutputDataType().getMimeType());
 		    response.setHeader("Content-Disposition",
 				       "attachment; filename=\"" + fname + fileExt + "\"");
+
 		    os = response.getOutputStream();
 		    EGEIOUtils.unzipSingleFile(new ZipFile(szipFile), os);
 		}

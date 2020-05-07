@@ -4,6 +4,8 @@
 	<mime-ext mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document" ext=".docx" />
 	<mime-ext mime="application/xhtml+xml" ext=".html" />
 	<mime-ext mime="application/x-latex" ext=".tex" />
+	<mime-ext mime="application/x-lilypond" ext=".ly" />
+	<mime-ext mime="text/x-lilypond" ext=".ly" />
 	<mime-ext mime="application/xml-dtd" ext=".dtd" />
 	<mime-ext mime="application/xml" ext=".xml" />
 	<mime-ext mime="application/xml-xsd" ext=".xsd" />
@@ -28,4 +30,5 @@
 	<mime-ext mime="application/vnd.ms-powerpoint" ext=".ppt" />
 	<mime-ext mime="application/x-shockwave-flash" ext=".swf" />
 	<mime-ext mime="application/xslfo+xml" ext=".fo" />
+	<mime-ext mime="image/png" ext=".png" />
 </file-extensions-map>

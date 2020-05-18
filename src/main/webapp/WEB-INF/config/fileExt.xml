@@ -33,4 +33,5 @@
 	<mime-ext mime="image/png" ext=".png" />
 	<mime-ext mime="application/postscript" ext=".ps" />
 	<mime-ext mime="image/svg+xml" ext=".svg" />
+	<mime-ext mime="audio/x-midi" ext=".mid" />
 </file-extensions-map>

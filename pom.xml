@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.psnc.dl.ege.webapp</groupId>
-  <artifactId>ege-webservice</artifactId>
+  <artifactId>meigarage-webservice</artifactId>
   <version>0.5.2</version>
   <packaging>war</packaging>
   <name>EGE Web Service</name>
@@ -15,16 +15,9 @@
     <project.reporting.outputEncoding>
       UTF-8
     </project.reporting.outputEncoding>
-
+  	<maven.compiler.source>1.8</maven.compiler.source>
+ 	<maven.compiler.target>1.8</maven.compiler.target>
   </properties>
-
-
-  <url>/multiprojects/ege-webservice</url>
-  <parent>
-    <groupId>pl.psnc.dl.ege</groupId>
-    <artifactId>ege</artifactId>
-    <version>0.5.0</version>
-  </parent>
   <description>
 	EGE RESTful web service. Provides EGE functionality through RESTful web service way.
   </description>
@@ -125,7 +118,7 @@
     </plugins>
   </reporting>
   <build>
-    <finalName>ege-webservice</finalName>
+    <finalName>meigarage-webservice</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -138,17 +131,15 @@
           <finalName>${project.artifactId}-${project.version}</finalName>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-	<version>2.3.2</version>
-
-        <configuration>
-          <compilerArgument>-verbose </compilerArgument>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.2</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -231,4 +222,21 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+   <repositories>
+		<repository>
+			<id>central</id>
+			<name>central</name>
+			<url>https://repo.maven.apache.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>edirom</id>
+			<name>Edirom</name>
+			<url>https://maven.pkg.github.com/Edirom/*</url>
+		</repository>
+        <repository>
+			<id>teic</id>
+			<name>TEIC</name>
+			<url>https://maven.pkg.github.com/TEIC/*</url>
+		</repository>
+	</repositories>  
 </project>

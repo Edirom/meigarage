@@ -32,5 +32,5 @@ jobs:
     - name: Upload Maven build artifact
       uses: actions/upload-artifact@v2
       with:
-        name: meigarage-webservice-0.5.2.war
-        path: /home/runner/work/meigarage-webservice/meigarage-webservice/target/meigarage-webservice-0.5.2.war
+        name: meigarage-webservice.war
+        path: /home/runner/work/meigarage-webservice/meigarage-webservice/target/meigarage-webservice.war

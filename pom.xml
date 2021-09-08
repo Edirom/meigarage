@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.psnc.dl.ege.webapp</groupId>
-  <artifactId>meigarage-webservice</artifactId>
+  <artifactId>meigarage</artifactId>
   <version>0.5.2</version>
   <packaging>war</packaging>
-  <name>EGE Web Service</name>
+  <name>MEI Garage</name>
   <properties>
 
     <project.build.sourceEncoding>
@@ -118,7 +118,7 @@
     </plugins>
   </reporting>
   <build>
-    <finalName>meigarage-webservice</finalName>
+    <finalName>meigarage</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>

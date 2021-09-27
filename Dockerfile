@@ -35,7 +35,7 @@ RUN chmod a+x /tmp/lilypond.sh \
     && /tmp/lilypond.sh --batch
 
 # clone and run
-RUN git clone -b master https://github.com/rism-ch/verovio /tmp/verovio \
+RUN git clone -b master https://github.com/rism-digital/verovio /tmp/verovio \
     && cd /tmp/verovio/tools \
     && cmake ../cmake \
     && make -j 8 \

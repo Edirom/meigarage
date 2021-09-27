@@ -7,6 +7,9 @@
 #########################################
 FROM tomcat:7
 
+LABEL org.opencontainers.image.source=https://github.com/edirom/meigarage
+LABEL maintainer="Anne Ferger and Peter Stadler for the ViFE"
+
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice
 

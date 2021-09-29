@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ABSOLUTE}
+      %5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+    <appender name="daniel" class="org.apache.log4j.FileAppender">
+        <param name="file" value="/usr/local/tomcat/logs/daniel.out"/>
+        <param name="immediateFlush" value="true"/>
+        <param name="threshold" value="debug"/>
+        <param name="append" value="false"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%m%n"/>
+        </layout>
+    </appender>
+    <root>
+        <priority value="debug"></priority>
+        <appender-ref ref="daniel"/>
+    </root>
+</log4j:configuration>

@@ -49,8 +49,8 @@ RUN git clone -b master https://github.com/rism-digital/verovio /tmp/verovio \
 # entrypoint script
 COPY docker-entrypoint.sh /my-docker-entrypoint.sh
 
-# where do we put/get this? 
-# COPY log4j.xml /var/cache/oxgarage/log4j.xml
+# log4j.xml configuration
+COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
 # download artifacts to /tmp
 # the war-file is zipped so we need to unzip it twice at the next stage 

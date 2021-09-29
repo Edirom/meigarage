@@ -59,7 +59,7 @@ ADD https://nightly.link/Edirom/MEIGarage/workflows/maven/main/meigarage.war.zip
 RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
     && unzip -q /tmp/meigarage.zip -d /tmp/ \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
-    && cp ${CATALINA_WEBAPPS}/meigarage/WEB-INF/lib/oxgarage.properties /etc/ \
+    && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \
     && rm /tmp/*.war \
     && rm /tmp/*.zip \
     && chmod 755 /my-docker-entrypoint.sh

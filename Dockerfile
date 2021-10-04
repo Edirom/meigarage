@@ -16,8 +16,7 @@ ENV OFFICE_HOME /usr/lib/libreoffice
 USER root:root
 
 RUN apt-get update \
-    && apt-get install -y libreoffice \
-    ttf-dejavu \
+    && apt-get install -y ttf-dejavu \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     fonts-baekmuk \
@@ -29,7 +28,6 @@ RUN apt-get update \
     build-essential \
     libgcc-8-dev \
     librsvg2-bin \
-    && ln -s ${OFFICE_HOME} /usr/lib/openoffice \
     && rm -rf /var/lib/apt/lists/*
 
 # installs lilypond into /usr/local/lilypond and /usr/local/bin as shortcut

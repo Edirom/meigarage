@@ -52,7 +52,7 @@ COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
 # download artifacts to /tmp
 # the war-file is zipped so we need to unzip it twice at the next stage 
-ADD https://nightly.link/Edirom/MEIGarage/workflows/maven/main/meigarage.war.zip /tmp/meigarage.zip
+ADD https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip /tmp/meigarage.zip
 
 RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
     && unzip -q /tmp/meigarage.zip -d /tmp/ \

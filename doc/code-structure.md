@@ -2,11 +2,11 @@
 
 ## About
 
-Code based on [OxGarage](https://github.com/TEIC/oxgarage) and modularized to allow for easier maintenance and creating Garages for different usage scenarios.
+This code based on [OxGarage](https://github.com/TEIC/oxgarage) and modularized to allow for easier maintenance and creating Garages for different usage scenarios.
 
 [TEIGarage](https://github.com/TEIC/TEIGarage) bundles functionality for the [TEI format](https://tei-c.org/), while [MEIGarage](https://github.com/Edirom/MEIGarage) focusses on the [MEI format](https://music-encoding.org/).
 
-Code is structured in a basis and various plugins (currently followin the Java Plugin Framework). All parts are available as GitHub Maven Packages to be used as dependencies.
+The code is structured in a base and various plugins (currently following the [Java Plugin Framework](http://jpf.sourceforge.net/)). All parts are available as GitHub Maven Packages to be used as dependencies.
 
 ## Main projects
 
@@ -22,7 +22,7 @@ Code is structured in a basis and various plugins (currently followin the Java P
 
 Contained in TEIGarage:
 
-* [ege-validator(https://github.com/TEIC/ege-validator)
+* [ege-validator](https://github.com/TEIC/ege-validator)
 * [ege-xsl-converter](https://github.com/TEIC/ege-xsl-converter)
 * [tei-converter](https://github.com/TEIC/tei-converter)
 * [oo-converter](https://github.com/TEIC/oo-converter)

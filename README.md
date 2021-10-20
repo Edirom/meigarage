@@ -10,13 +10,10 @@
 
 * [About the Project](#about)
 * [Installation](#installation)
+    * [With Docker](#installing-with-docker)
+    * [Without Docker](#installing-without-docker)
 * [Building with Maven](#building-with-maven)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Authors](#authors)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
+
 
 # About
 
@@ -44,7 +41,7 @@ docker run --rm \
 
 Once it's running, you can point your browser at `http://localhost:8080/ege-webservice` for the webservice.
 
-#### requirements
+### requirements
 
 For running the image you'll need to have the TEI Stylesheets as well as the TEI P5 sources.
 There are several ways to obtain these (see "Get and install a local copy" at http://www.tei-c.org/Guidelines/P5/), 
@@ -53,14 +50,14 @@ one of them is to download the latest release of both
 Then, the Stylesheets' root directory (i.e. which holds the `profiles` directory) must be mapped to `/usr/share/xml/tei/stylesheet` whereas for the 
 P5 sources you'll need to find the subdirectory which holds the file `p5subset.xml` and map this to `/usr/share/xml/tei/odd`; (should be `xml/tei/odd`).
 
-#### available parameters
+### available parameters
 
 * **WEBSERVICE_URL** : The full URL of the RESTful *web service*. This is relevant for the *web client* (aka the GUI) if you are running the docker container on a different port or with a different URL.
 
 * **-v** TEI paths : The local path to the stylesheets and sources can be mounted to /usr/share/xml/tei/ using the --volume parameter.
 
 
-#### exposed ports
+### exposed ports
 
 The Docker image exposes two ports, 8080 and 8081. If you're running OxGarage over plain old HTTP, use the 8080 connector. 
 For HTTPS connections behind a 
@@ -68,21 +65,21 @@ For HTTPS connections behind a
 
 ## Installing without Docker
 
-#### Getting the application packages
+### Getting the application packages
 
 The latest released application package (WAR file) is available from the [MEIGarage release page](https://github.com/Edirom/MEIGarage/releases). 
 The latest dev version can be downloaded via [nightly.link](https://nightly.link/) from the [GitHub Action](https://github.com/Edirom/MEIGarage/blob/main/.github/workflows/maven.yml) at [nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip](https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip).
 
 The war file could also be build locally, see [Building with Maven](#building-with-maven). 
 
-#### Running the application packages
+### Running the application packages
 
 Using a running Tomcat (or similar container), you can install the WAR file (see above) in the usual way. In this case, you will need to do some configuration manually:
 
  1.   copy the file [ege-webservice/WEB-INF/lib/oxgarage.properties](https://github.com/Edirom/MEIGarage/blob/main/src/main/webapp/WEB-INF/lib/oxgarage.properties) to `/etc/oxgarage.properties`
  2.   create a directory `/var/cache/oxgarage` and copy the file [log4j.xml](https://github.com/Edirom/MEIGarage/blob/main/log4j.xml) to there
  3.   make the directory owned by the Tomcat user, so that it can create files there: eg `chown -R tomcat6:tomcat6 /var/cache/oxgarage`
- 4.  make sure the TEI stylesheets and source are installed at `/usr/share/xml/tei` using the Debian file hierarchy standard; the distribution files mentioned in the [requirements](#requirements) are in the correct layout.
+ 4.   make sure the TEI stylesheets and source are installed at `/usr/share/xml/tei` using the Debian file hierarchy standard; the distribution files mentioned in the [requirements](#requirements) are in the correct layout.
 
 You'll probably need to restart your servlet container to make sure these changes take effect.
 

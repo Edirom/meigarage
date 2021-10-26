@@ -50,6 +50,18 @@ one of them is to download the latest release of both
 Then, the Stylesheets' root directory (i.e. which holds the `profiles` directory) must be mapped to `/usr/share/xml/tei/stylesheet` whereas for the 
 P5 sources you'll need to find the subdirectory which holds the file `p5subset.xml` and map this to `/usr/share/xml/tei/odd`; (should be `xml/tei/odd`).
 
+At the following places the respective git repositories need to be cloned (or symlinks need to be created to point at the correct places):
+
+| location on server | data to be added there |
+| --------------- | --------------- | 
+| /usr/share/xml/tei/stylesheet |  https://github.com/TEIC/Stylesheets/release | 
+| /usr/share/xml/mei/music-stylesheets/encoding-tools |https://github.com/music-encoding/encoding-tools | 
+| /usr/share/xml/mei/music-stylesheets/w3c-musicxml  | https://github.com/w3c/musicxml | 
+| /usr/share/xml/mei/music-stylesheets/meiler | https://github.com/rettinghaus/MEILER | 
+| /usr/share/xml/mei/music-encoding | to do | 
+| /usr/share/xml/mei/music-stylesheets/data-configuration | https://github.com/Edirom/data-configuration | 
+
+
 ### available parameters
 
 * **WEBSERVICE_URL** : The full URL of the RESTful *web service*. This is relevant for the *web client* (aka the GUI) if you are running the docker container on a different port or with a different URL.

@@ -34,6 +34,7 @@ With Docker installed, a readymade image can be fetched from the [GitHub Action]
 docker run --rm \
     -p 8080:8080 \
     -v /usr/share/xml/tei/stylesheet:/usr/share/xml/tei/stylesheet \
+    -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd        
     -v /usr/share/xml/mei/music-stylesheets/encoding-tools:/usr/share/xml/mei/music-stylesheets/encoding-tools \
     -v /usr/share/xml/mei/music-stylesheets/w3c-musicxml:/usr/share/xml/mei/music-stylesheets/w3c-musicxml \
     -v /usr/share/xml/mei/music-stylesheets/meiler:/usr/share/xml/mei/music-stylesheets/meiler \
@@ -59,6 +60,7 @@ At the following places the respective git repositories need to be cloned (or sy
 | location on server | data to be added there |
 | --------------- | --------------- | 
 | /usr/share/xml/tei/stylesheet |  https://github.com/TEIC/Stylesheets/release | 
+| /usr/share/xml/tei/odd | https://github.com/TEIC/Stylesheets/releases |
 | /usr/share/xml/mei/music-stylesheets/encoding-tools |https://github.com/music-encoding/encoding-tools | 
 | /usr/share/xml/mei/music-stylesheets/w3c-musicxml  | https://github.com/w3c/musicxml | 
 | /usr/share/xml/mei/music-stylesheets/meiler | https://github.com/rettinghaus/MEILER | 
@@ -102,7 +104,7 @@ You'll probably need to restart your servlet container to make sure these change
 
 Edit the file `oxgarage.properties` if you need to change the names of directories.
 
-Check the working system by visiting /ege-webclient/ on your Tomcat (or similar) server, and trying an example transformation. You can check the RESTful web server using e.g. Curl. For example, to convert a MEI 3.0 file to PDF Score (Verovio) format, you might do
+Check the working system by visiting /ege-webclient/ on your Tomcat (or similar) server, and trying an example transformation. You can check the RESTful web server using e.g. Curl. For example, to convert a MEI 3.0 file to Lilypond format, you might do
 
 ```bash
 curl -s -o test.ly -F upload=@test.xml http://localhost:8080//ege-webservice/Conversions/mei40%3Atext%3Axml/lilypond%3Atext%3Ax-lilypond/

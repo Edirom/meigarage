@@ -33,6 +33,12 @@ With Docker installed, a readymade image can be fetched from the [GitHub Action]
 ```bash
 docker run --rm \
     -p 8080:8080 \
+    -v /usr/share/xml/tei/stylesheet:/usr/share/xml/tei/stylesheet \
+    -v /usr/share/xml/mei/music-stylesheets/encoding-tools:/usr/share/xml/mei/music-stylesheets/encoding-tools \
+    -v /usr/share/xml/mei/music-stylesheets/w3c-musicxml:/usr/share/xml/mei/music-stylesheets/w3c-musicxml \
+    -v /usr/share/xml/mei/music-stylesheets/meiler:/usr/share/xml/mei/music-stylesheets/meiler \
+    -v /usr/share/xml/mei/music-encoding:/usr/share/xml/mei/music-encoding \
+    -v /usr/share/xml/mei/music-stylesheets/data-configuration:/usr/share/xml/mei/music-stylesheets/data-configuration \
     -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/  \
     --name meigarage ghcr.io/edirom/meigarage
 ```

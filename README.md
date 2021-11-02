@@ -33,8 +33,6 @@ With Docker installed, a readymade image can be fetched from the [GitHub Action]
 ```bash
 docker run --rm \
     -p 8080:8080 \
-    -v /your/path/to/Stylesheets:/usr/share/xml/tei/stylesheet \ 
-    -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd \
     -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/  \
     --name meigarage ghcr.io/edirom/meigarage
 ```
@@ -66,7 +64,8 @@ At the following places the respective git repositories need to be cloned (or sy
 
 * **WEBSERVICE_URL** : The full URL of the RESTful *web service*. This is relevant for the *web client* (aka the GUI) if you are running the docker container on a different port or with a different URL.
 
-* **-v** TEI paths : The local path to the stylesheets and sources can be mounted to /usr/share/xml/tei/ using the --volume parameter.
+* **-v** Stylesheet paths : The local path to the stylesheets and sources can be mounted to /usr/share/xml/tei/ using the --volume parameter, using e.g.  `-v /your/path/to/Stylesheets:/usr/share/xml/tei/stylesheet \ 
+    -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd`
 
 
 ### exposed ports

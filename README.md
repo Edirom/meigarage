@@ -60,7 +60,8 @@ At the following places the respective git repositories need to be cloned (or sy
 | location on server | data to be added there |
 | --------------- | --------------- | 
 | /usr/share/xml/tei/stylesheet |  https://github.com/TEIC/Stylesheets/releases/latest | 
-| /usr/share/xml/tei/odd | https://github.com/TEIC/TEI/releases/latest || /usr/share/xml/mei/music-stylesheets/encoding-tools |https://github.com/music-encoding/encoding-tools | 
+| /usr/share/xml/tei/odd | https://github.com/TEIC/TEI/releases/latest |
+| /usr/share/xml/mei/music-stylesheets/encoding-tools | https://github.com/music-encoding/encoding-tools/releases/latest | 
 | /usr/share/xml/mei/music-stylesheets/w3c-musicxml  | https://github.com/w3c/musicxml/releases/latest | 
 | /usr/share/xml/mei/music-stylesheets/meiler | https://github.com/rettinghaus/MEILER/releases/latest | 
 | /usr/share/xml/mei/music-encoding | https://github.com/music-encoding/music-encoding - todo sort each version into correct folder | 

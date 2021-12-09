@@ -166,7 +166,11 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && rm /tmp/mei401.zip \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei401 \
     && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei401 \
-    && rm -r /tmp/mei401
+    && rm -r /tmp/mei401 \
+    && git clone -b develop https://github.com/music-encoding/music-encoding /tmp/dev \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/meidev \
+    && cp -r /tmp/meidev/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/meidev \
+    && rm -r /tmp/meidev
 
 
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder

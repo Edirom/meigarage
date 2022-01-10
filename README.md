@@ -1,9 +1,9 @@
 # MEIGarage
 
 [![Build Status](https://github.com/Edirom/MEIGarage/actions/workflows/maven.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/maven.yml)
+[![Docker Automated build](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml)
 [![GitHub license](https://img.shields.io/github/license/teic/TEIGarage.svg)](https://github.com/Edirom/MEIGarage/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/Edirom/MEIGarage.svg)](https://github.com/Edirom/MEIGarage/releases)
-[![Docker Automated build](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -33,40 +33,11 @@ With Docker installed, a readymade image can be fetched from the [GitHub Action]
 ```bash
 docker run --rm \
     -p 8080:8080 \
-    -v /usr/share/xml/tei/stylesheet:/usr/share/xml/tei/stylesheet \
-    -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd        
-    -v /usr/share/xml/mei/music-stylesheets/encoding-tools:/usr/share/xml/mei/music-stylesheets/encoding-tools \
-    -v /usr/share/xml/mei/music-stylesheets/w3c-musicxml:/usr/share/xml/mei/music-stylesheets/w3c-musicxml \
-    -v /usr/share/xml/mei/music-stylesheets/meiler:/usr/share/xml/mei/music-stylesheets/meiler \
-    -v /usr/share/xml/mei/music-encoding:/usr/share/xml/mei/music-encoding \
-    -v /usr/share/xml/mei/music-stylesheets/data-configuration:/usr/share/xml/mei/music-stylesheets/data-configuration \
     -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/  \
     --name meigarage ghcr.io/edirom/meigarage
 ```
 
 Once it's running, you can point your browser at `http://localhost:8080/ege-webservice` for the webservice.
-
-### requirements
-
-For running the image you'll need to have the TEI Stylesheets as well as the TEI P5 sources.
-There are several ways to obtain these (see "Get and install a local copy" at http://www.tei-c.org/Guidelines/P5/), 
-one of them is to download the latest release of both 
-[TEI](https://github.com/TEIC/TEI/releases) and [Stylesheets](https://github.com/TEIC/Stylesheets/releases) from GitHub. 
-Then, the Stylesheets' root directory (i.e. which holds the `profiles` directory) must be mapped to `/usr/share/xml/tei/stylesheet` whereas for the 
-P5 sources you'll need to find the subdirectory which holds the file `p5subset.xml` and map this to `/usr/share/xml/tei/odd`; (should be `xml/tei/odd`).
-
-At the following places the respective git repositories need to be cloned (or symlinks need to be created to point at the correct places):
-
-| location on server | data to be added there |
-| --------------- | --------------- | 
-| /usr/share/xml/tei/stylesheet |  https://github.com/TEIC/Stylesheets/releases/latest | 
-| /usr/share/xml/tei/odd | https://github.com/TEIC/TEI/releases/latest |
-| /usr/share/xml/mei/music-stylesheets/encoding-tools | https://github.com/music-encoding/encoding-tools/releases/latest | 
-| /usr/share/xml/mei/music-stylesheets/w3c-musicxml  | https://github.com/w3c/musicxml/releases/latest | 
-| /usr/share/xml/mei/music-stylesheets/meiler | https://github.com/rettinghaus/MEILER/releases/latest | 
-| /usr/share/xml/mei/music-encoding | https://github.com/music-encoding/music-encoding - todo sort each version into correct folder | 
-| /usr/share/xml/mei/music-stylesheets/data-configuration | https://github.com/Edirom/data-configuration | 
-
 
 ### available parameters
 
@@ -75,10 +46,64 @@ At the following places the respective git repositories need to be cloned (or sy
 * **-v** Stylesheet paths : The local path to the stylesheets and sources can be mounted to /usr/share/xml/tei/ using the --volume parameter, using e.g.  `-v /your/path/to/Stylesheets:/usr/share/xml/tei/stylesheet \ 
     -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd`
 
+### TEI and MEI sources and stylesheets
+
+
+When the docker image is build, the latest releases of the TEI and MEI Sources and Stylesheets are added to the image.
+
+If you want to use another version of the sources or stylesheets, you can mount the local folders where your custom files are located when running the Docker image. 
+
+There are several ways to obtain these (see "Get and install a local copy" at http://www.tei-c.org/Guidelines/P5/), 
+one of them is to download the latest release of both 
+[TEI](https://github.com/TEIC/TEI/releases) and [Stylesheets](https://github.com/TEIC/Stylesheets/releases) from GitHub. 
+Then, the Stylesheets' root directory (i.e. which holds the `profiles` directory) must be mapped to `/usr/share/xml/tei/stylesheet` whereas for the 
+P5 sources you'll need to find the subdirectory which holds the file `p5subset.xml` and map this to `/usr/share/xml/tei/odd`; (should be `xml/tei/odd`).
+
+The respective git repositories:
+
+| location on server | data to be added there |
+| --------------- | --------------- | 
+| /usr/share/xml/tei/stylesheet |  https://github.com/TEIC/Stylesheets/releases/latest | 
+| /usr/share/xml/tei/odd | https://github.com/TEIC/TEI/releases/latest |
+| /usr/share/xml/mei/music-stylesheets/encoding-tools | https://github.com/music-encoding/encoding-tools/releases/latest | 
+| /usr/share/xml/mei/music-stylesheets/w3c-musicxml  | https://github.com/w3c/musicxml/releases/latest | 
+| /usr/share/xml/mei/music-stylesheets/meiler | https://github.com/rettinghaus/MEILER/releases/latest | 
+| /usr/share/xml/mei/music-encoding | https://github.com/music-encoding/music-encoding - each released version sorted into the respctive folder | 
+| /usr/share/xml/mei/music-stylesheets/data-configuration | https://github.com/Edirom/data-configuration - the whole repository| 
+
+Using your local folders for the TEI sources and stylesheets: 
+
+```bash
+docker run --rm \
+    -p 8080:8080 \   
+    -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/  \  
+    -v /your/path/to/tei/stylesheet:/usr/share/xml/tei/stylesheet \
+    -v /your/path/to/tei/odd:/usr/share/xml/tei/odd  \    
+    -v /your/path/to/mei/music-stylesheets/encoding-tools:/usr/share/xml/mei/music-stylesheets/encoding-tools \
+    -v /your/path/to/mei/music-stylesheets/w3c-musicxml:/usr/share/xml/mei/music-stylesheets/w3c-musicxml \
+    -v /your/path/to/mei/music-stylesheets/meiler:/usr/share/xml/mei/music-stylesheets/meiler \
+    -v /your/path/to/mei/music-encoding:/usr/share/xml/mei/music-encoding \
+    -v /your/path/to/mei/music-stylesheets/data-configuration:/usr/share/xml/mei/music-stylesheets/data-configuration \    
+    --name meigarage ghcr.io/edirom/meigarage
+```
+
+You can also change the version that is used by supplying different version number when building the image locally running something like
+
+```bash
+docker build \
+--build-arg VERSION_STYLESHEET=7.52.0 \
+--build-arg VERSION_ODD=4.3.0 \
+--build-arg VERSION_ENCODING_TOOLS=3.0.0 \
+--build-arg VERSION_W3C_MUSICXML=4.0 \
+--build-arg VERSION_MEILER=2.0.0  \
+.
+```
+
+in your local copy of the MEIGarage. 
 
 ### exposed ports
 
-The Docker image exposes two ports, 8080 and 8081. If you're running OxGarage over plain old HTTP, use the 8080 connector. 
+The Docker image exposes two ports, 8080 and 8081. If you're running MEIGarage over plain old HTTP, use the 8080 connector. 
 For HTTPS connections behind a 
 [SSL terminating Load Balancer](https://creechy.wordpress.com/2011/08/22/ssl-termination-load-balancers-java/), please use the 8081 connector.
 
@@ -95,10 +120,10 @@ The war file could also be build locally, see [Building with Maven](#building-wi
 
 Using a running Tomcat (or similar container), you can install the WAR file (see above) in the usual way. In this case, you will need to do some configuration manually:
 
- 1.   copy the file [ege-webservice/WEB-INF/lib/oxgarage.properties](https://github.com/Edirom/MEIGarage/blob/main/src/main/webapp/WEB-INF/lib/oxgarage.properties) to `/etc/oxgarage.properties`
+ 1.   copy the file [MEIGarage/WEB-INF/lib/oxgarage.properties](https://github.com/Edirom/MEIGarage/blob/main/src/main/webapp/WEB-INF/lib/oxgarage.properties) to `/etc/oxgarage.properties`
  2.   create a directory `/var/cache/oxgarage` and copy the file [log4j.xml](https://github.com/Edirom/MEIGarage/blob/main/log4j.xml) to there
  3.   make the directory owned by the Tomcat user, so that it can create files there: eg `chown -R tomcat6:tomcat6 /var/cache/oxgarage`
- 4.   make sure the TEI stylesheets and source are installed at `/usr/share/xml/tei` using the Debian file hierarchy standard; the distribution files mentioned in the [requirements](#requirements) are in the correct layout.
+ 4.   make sure the MEI & TEI stylesheets and source are installed at `/usr/share/xml/tei` using the Debian file hierarchy standard; the distribution files mentioned in the [TEI and MEI sources and stylesheets](#tei-and-mei-sources-and-stylesheets) are in the correct layout.
 
 You'll probably need to restart your servlet container to make sure these changes take effect.
 

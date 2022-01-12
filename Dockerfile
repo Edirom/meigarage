@@ -93,7 +93,7 @@ RUN if [ "$VERSION_STYLESHEET" = "latest" ] ; then \
 RUN if [ "$VERSION_ODD" = "latest" ] ; then \
     VERSION_ODD=$(curl "https://api.github.com/repos/TEIC/TEI/releases/latest" | grep -Po '"tag_name": "P5_Release_\K.*?(?=")'); \   
     fi \
-    && echo "Stylesheet version set to ${VERSION_ODD}" \
+    && echo "ODD version set to ${VERSION_ODD}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
     && curl -s -L -o /tmp/odd.zip https://github.com/TEIC/TEI/releases/download/P5_Release_${VERSION_ODD}/tei-${VERSION_ODD}.zip \
     && unzip /tmp/odd.zip -d /tmp/odd \
@@ -106,7 +106,7 @@ RUN if [ "$VERSION_ODD" = "latest" ] ; then \
 RUN if [ "$VERSION_ENCODING_TOOLS" = "latest" ] ; then \
     VERSION_ENCODING_TOOLS=$(curl "https://api.github.com/repos/music-encoding/encoding-tools/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
     fi \
-    && echo "Stylesheet version set to ${VERSION_ENCODING_TOOLS}" \
+    && echo "Encoding tools version set to ${VERSION_ENCODING_TOOLS}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
     && curl -s -L -o /tmp/encoding.zip https://github.com/music-encoding/encoding-tools/archive/refs/tags/v${VERSION_ENCODING_TOOLS}.zip \
     && unzip /tmp/encoding.zip -d /tmp/encoding \
@@ -132,7 +132,7 @@ RUN if [ "$VERSION_W3C_MUSICXML" = "latest" ] ; then \
 RUN if [ "$VERSION_MEILER" = "latest" ] ; then \
     VERSION_MEILER=$(curl "https://api.github.com/repos/rettinghaus/MEILER/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
     fi \
-    && echo "Stylesheet version set to ${VERSION_MEILER}" \
+    && echo "MEILER version set to ${VERSION_MEILER}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
     && curl -s -L -o /tmp/meiler.zip https://github.com/rettinghaus/MEILER/archive/refs/tags/v${VERSION_MEILER}.zip \
     && unzip /tmp/meiler.zip -d /tmp/meiler \

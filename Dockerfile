@@ -27,7 +27,7 @@ ENV MEI_SOURCES_HOME /usr/share/xml/mei
 USER root:root
 
 RUN apt-get update \
-    && apt-get install -y ttf-dejavu \
+    && apt-get install -y --no-install-recommends ttf-dejavu \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     fonts-baekmuk \
@@ -62,11 +62,10 @@ COPY docker-entrypoint.sh /my-docker-entrypoint.sh
 # log4j.xml configuration
 COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
-# download artifacts to /tmp
+# download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
 # the war-file is zipped so we need to unzip it twice at the next stage 
-ADD https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip /tmp/meigarage.zip
-
 RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
+    && curl -Ls https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip -o /tmp/meigarage.zip \
     && unzip -q /tmp/meigarage.zip -d /tmp/ \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \

@@ -11,18 +11,18 @@ The code is structured in a base and various plugins (currently following the [J
 ## Main projects
 
 * [TEIGarage](https://github.com/TEIC/TEIGarage) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/TEIGarage.svg)](https://github.com/TEIC/TEIGarage/releases)
-* [MEIGarage](https://github.com/Edirom/MEIGarage) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/TEIGarage.svg)](https://github.com/TEIC/TEIGarage/releases)
+* [MEIGarage](https://github.com/Edirom/MEIGarage) - [![GitHub release](https://img.shields.io/github/v/release/Edirom/MEIGarage.svg)](https://github.com/Edirom/MEIGarage/releases)
 
 ## Basis
 
-* [ege-api](https://github.com/TEIC/ege-api) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/TEIGarage.svg)](https://github.com/TEIC/TEIGarage/releases)
-* [ege-framework](https://github.com/TEIC/ege-framework) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/TEIGarage.svg)](https://github.com/TEIC/TEIGarage/releases)
+* [ege-api](https://github.com/TEIC/ege-api) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/Tege-api.svg)](https://github.com/TEIC/ege-api/releases)
+* [ege-framework](https://github.com/TEIC/ege-framework) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/ege-framework.svg)](https://github.com/TEIC/ege-framework/releases)
 
 ## Available Plugins
 
 Contained in TEIGarage:
 
-* [ege-validator](https://github.com/TEIC/ege-validator) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/TEIGarage.svg)](https://github.com/TEIC/TEIGarage/releases)
+* [ege-validator](https://github.com/TEIC/ege-validator) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/ege-validator.svg)](https://github.com/TEIC/ege-validator/releases)
 * [ege-xsl-converter](https://github.com/TEIC/ege-xsl-converter) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/ege-xsl-converter.svg)](https://github.com/TEIC/ege-xsl-converter/releases)
 * [tei-converter](https://github.com/TEIC/tei-converter) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/tei-converter.svg)](https://github.com/TEIC/tei-converter/releases)
 * [oo-converter](https://github.com/TEIC/oo-converter) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/oo-converter.svg)](https://github.com/TEIC/oo-converter/releases)

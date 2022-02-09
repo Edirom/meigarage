@@ -15,7 +15,7 @@ The code is structured in a base and various plugins (currently following the [J
 
 ## Basis
 
-* [ege-api](https://github.com/TEIC/ege-api) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/Tege-api.svg)](https://github.com/TEIC/ege-api/releases)
+* [ege-api](https://github.com/TEIC/ege-api) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/ege-api.svg)](https://github.com/TEIC/ege-api/releases)
 * [ege-framework](https://github.com/TEIC/ege-framework) - [![GitHub release](https://img.shields.io/github/v/release/TEIC/ege-framework.svg)](https://github.com/TEIC/ege-framework/releases)
 
 ## Available Plugins

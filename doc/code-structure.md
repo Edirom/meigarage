@@ -10,7 +10,7 @@ The code is structured in a base and various plugins (currently following the [J
 
 ## Main projects
 
-* [TEIGarage](https://github.com/TEIC/TEIGarage)
+* [TEIGarage](https://github.com/TEIC/TEIGarage) [![GitHub release](https://img.shields.io/github/v/release/TEIC/TEIGarage.svg)](https://github.com/TEIC/TEIGarage/releases)
 * [MEIGarage](https://github.com/Edirom/MEIGarage)
 
 ## Basis

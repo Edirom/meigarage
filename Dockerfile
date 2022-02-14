@@ -5,7 +5,8 @@
 # of the MEIGarage (backend),
 # and installs it in a Tomcat application server
 #########################################
-FROM tomcat:7
+FROM tomcat:9-jdk11-openjdk
+
 
 LABEL org.opencontainers.image.source=https://github.com/edirom/meigarage
 LABEL maintainer="Anne Ferger and Peter Stadler for the ViFE"
@@ -27,7 +28,7 @@ ENV MEI_SOURCES_HOME /usr/share/xml/mei
 USER root:root
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ttf-dejavu \
+    && apt-get install -y --no-install-recommends fonts-dejavu \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     fonts-baekmuk \
@@ -37,7 +38,7 @@ RUN apt-get update \
     fonts-ipafont-mincho \
     cmake \
     build-essential \
-    libgcc-8-dev \
+    libgcc-10-dev \
     librsvg2-bin \
     curl \
     && rm -rf /var/lib/apt/lists/*

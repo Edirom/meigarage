@@ -17,7 +17,7 @@ ARG VERSION_W3C_MUSICXML=latest
 ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
 #ARG VERSION_DATA_CONFIGURATION=latest : no releases/versions available yet
-ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip
+ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven/dev/artifact.zip
 
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice

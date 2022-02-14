@@ -17,7 +17,7 @@ ARG VERSION_W3C_MUSICXML=latest
 ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
 #ARG VERSION_DATA_CONFIGURATION=latest : no releases/versions available yet
-
+ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip
 
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice
@@ -65,7 +65,7 @@ COPY log4j.xml /var/cache/oxgarage/log4j.xml
 # download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
 # the war-file is zipped so we need to unzip it twice at the next stage 
 RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
-    && curl -Ls https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip -o /tmp/meigarage.zip \
+    && curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
     && unzip -q /tmp/meigarage.zip -d /tmp/ \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \

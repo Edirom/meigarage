@@ -17,7 +17,7 @@ ARG VERSION_W3C_MUSICXML=latest
 ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
 #ARG VERSION_DATA_CONFIGURATION=latest : no releases/versions available yet
-
+ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven/dev/artifact.zip
 
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice
@@ -27,7 +27,7 @@ ENV MEI_SOURCES_HOME /usr/share/xml/mei
 USER root:root
 
 RUN apt-get update \
-    && apt-get install -y ttf-dejavu \
+    && apt-get install -y --no-install-recommends ttf-dejavu \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     fonts-baekmuk \
@@ -62,11 +62,10 @@ COPY docker-entrypoint.sh /my-docker-entrypoint.sh
 # log4j.xml configuration
 COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
-# download artifacts to /tmp
+# download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
 # the war-file is zipped so we need to unzip it twice at the next stage 
-ADD https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip /tmp/meigarage.zip
-
 RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
+    && curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
     && unzip -q /tmp/meigarage.zip -d /tmp/ \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \
@@ -93,7 +92,7 @@ RUN if [ "$VERSION_STYLESHEET" = "latest" ] ; then \
 RUN if [ "$VERSION_ODD" = "latest" ] ; then \
     VERSION_ODD=$(curl "https://api.github.com/repos/TEIC/TEI/releases/latest" | grep -Po '"tag_name": "P5_Release_\K.*?(?=")'); \   
     fi \
-    && echo "Stylesheet version set to ${VERSION_ODD}" \
+    && echo "ODD version set to ${VERSION_ODD}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
     && curl -s -L -o /tmp/odd.zip https://github.com/TEIC/TEI/releases/download/P5_Release_${VERSION_ODD}/tei-${VERSION_ODD}.zip \
     && unzip /tmp/odd.zip -d /tmp/odd \
@@ -106,7 +105,7 @@ RUN if [ "$VERSION_ODD" = "latest" ] ; then \
 RUN if [ "$VERSION_ENCODING_TOOLS" = "latest" ] ; then \
     VERSION_ENCODING_TOOLS=$(curl "https://api.github.com/repos/music-encoding/encoding-tools/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
     fi \
-    && echo "Stylesheet version set to ${VERSION_ENCODING_TOOLS}" \
+    && echo "Encoding tools version set to ${VERSION_ENCODING_TOOLS}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
     && curl -s -L -o /tmp/encoding.zip https://github.com/music-encoding/encoding-tools/archive/refs/tags/v${VERSION_ENCODING_TOOLS}.zip \
     && unzip /tmp/encoding.zip -d /tmp/encoding \
@@ -132,7 +131,7 @@ RUN if [ "$VERSION_W3C_MUSICXML" = "latest" ] ; then \
 RUN if [ "$VERSION_MEILER" = "latest" ] ; then \
     VERSION_MEILER=$(curl "https://api.github.com/repos/rettinghaus/MEILER/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
     fi \
-    && echo "Stylesheet version set to ${VERSION_MEILER}" \
+    && echo "MEILER version set to ${VERSION_MEILER}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
     && curl -s -L -o /tmp/meiler.zip https://github.com/rettinghaus/MEILER/archive/refs/tags/v${VERSION_MEILER}.zip \
     && unzip /tmp/meiler.zip -d /tmp/meiler \

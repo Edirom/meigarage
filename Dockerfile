@@ -146,26 +146,26 @@ RUN if [ "$VERSION_MEILER" = "latest" ] ; then \
 RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/MEI2012_v2.0.0.zip \
     && unzip /tmp/mei200.zip -d /tmp/mei200 \
     && rm /tmp/mei200.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei200 \
-    && cp -r /tmp/mei200/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei200 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei200 \
+    && cp -r /tmp/mei200/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei200 \
     && rm -r /tmp/mei200 \
     && curl -s -L -o /tmp/mei211.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/MEI2013_v2.1.1.zip \
     && unzip /tmp/mei211.zip -d /tmp/mei211 \
     && rm /tmp/mei211.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei211 \
-    && cp -r /tmp/mei211/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei211 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei211 \
+    && cp -r /tmp/mei211/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei211 \
     && rm -r /tmp/mei211 \
     && curl -s -L -o /tmp/mei300.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/v3.0.0.zip \
     && unzip /tmp/mei300.zip -d /tmp/mei300 \
     && rm /tmp/mei300.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei300 \
-    && cp -r /tmp/mei300/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei300 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei300 \
+    && cp -r /tmp/mei300/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei300 \
     && rm -r /tmp/mei300 \
     && curl -s -L -o /tmp/mei401.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/v4.0.1.zip \
     && unzip /tmp/mei401.zip -d /tmp/mei401 \
     && rm /tmp/mei401.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei401 \
-    && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei401 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
+    && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && rm -r /tmp/mei401
 
 

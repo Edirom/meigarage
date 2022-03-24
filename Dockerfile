@@ -174,7 +174,10 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     #&& xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml
 
 RUN xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml
-
+RUN xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei300/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei300/source/mei-source_canonicalized.xml
+RUN xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei211/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei211/source/mei-source_canonicalized.xml \
+RUN xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei200/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei200/source/mei-source_canonicalized.xml \
+    
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder
 RUN git clone -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/data-configuration \

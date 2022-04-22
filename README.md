@@ -1,7 +1,6 @@
 # MEIGarage
 
-[![Build Status](https://github.com/Edirom/MEIGarage/actions/workflows/maven.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/maven.yml)
-[![Docker Automated build](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml)
+[![Build Status](https://github.com/Edirom/MEIGarage/actions/workflows/maven_docker.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/maven_docker.yml)
 [![GitHub license](https://img.shields.io/github/license/teic/TEIGarage.svg)](https://github.com/Edirom/MEIGarage/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/Edirom/MEIGarage.svg)](https://github.com/Edirom/MEIGarage/releases)
 

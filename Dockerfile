@@ -40,7 +40,7 @@ RUN apt-get update \
     build-essential \
     libgcc-10-dev \
     librsvg2-bin \
-    curl \  
+    curl \
     libxml2-utils \
     && rm -rf /var/lib/apt/lists/*
 
@@ -172,7 +172,10 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && rm -r /tmp/mei401 \
     && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml
-   
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/meidev \
+    && git clone -b develop https://github.com/music-encoding/music-encoding ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml
+
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder
 RUN git clone -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/data-configuration \

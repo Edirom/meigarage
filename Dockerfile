@@ -19,6 +19,7 @@ ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
 #ARG VERSION_DATA_CONFIGURATION=latest : no releases/versions available yet
 ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven_docker/dev/artifact.zip
+ARG BUILDTYPE=local
 
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice
@@ -66,10 +67,15 @@ COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
 # download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
 # the war-file is zipped so we need to unzip it twice at the next stage 
-RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
-    && curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
+#conditional copy in docker needs a strange hack
+COPY log4j.xml artifact/meigarage.wa[r] /tmp/
+
+RUN if [ "$BUILDTYPE" = "local" ] ; then \
+    curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
     && unzip -q /tmp/meigarage.zip -d /tmp/ \
+    fi \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
+    && rm -Rf ${CATALINA_WEBAPPS}/ROOT \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \
     && rm /tmp/*.war \
     && rm /tmp/*.zip \

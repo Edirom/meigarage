@@ -18,7 +18,7 @@ ARG VERSION_W3C_MUSICXML=latest
 ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
 #ARG VERSION_DATA_CONFIGURATION=latest : no releases/versions available yet
-ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven/dev/artifact.zip
+ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven_docker/dev/artifact.zip
 
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice
@@ -41,6 +41,7 @@ RUN apt-get update \
     libgcc-10-dev \
     librsvg2-bin \
     curl \
+    libxml2-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # installs lilypond into /usr/local/lilypond and /usr/local/bin as shortcut
@@ -146,32 +147,36 @@ RUN if [ "$VERSION_MEILER" = "latest" ] ; then \
 RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/MEI2012_v2.0.0.zip \
     && unzip /tmp/mei200.zip -d /tmp/mei200 \
     && rm /tmp/mei200.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei200 \
-    && cp -r /tmp/mei200/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei200 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei200 \
+    && cp -r /tmp/mei200/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei200 \
     && rm -r /tmp/mei200 \
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei200/source/specs/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei200/source/mei-source_canonicalized.xml \
     && curl -s -L -o /tmp/mei211.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/MEI2013_v2.1.1.zip \
     && unzip /tmp/mei211.zip -d /tmp/mei211 \
     && rm /tmp/mei211.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei211 \
-    && cp -r /tmp/mei211/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei211 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei211 \
+    && cp -r /tmp/mei211/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei211 \
     && rm -r /tmp/mei211 \
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei211/source/specs/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei211/source/mei-source_canonicalized.xml \
     && curl -s -L -o /tmp/mei300.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/v3.0.0.zip \
     && unzip /tmp/mei300.zip -d /tmp/mei300 \
     && rm /tmp/mei300.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei300 \
-    && cp -r /tmp/mei300/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei300 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei300 \
+    && cp -r /tmp/mei300/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei300 \
     && rm -r /tmp/mei300 \
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei300/source/specs/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei300/source/mei-source_canonicalized.xml \
     && curl -s -L -o /tmp/mei401.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/v4.0.1.zip \
     && unzip /tmp/mei401.zip -d /tmp/mei401 \
     && rm /tmp/mei401.zip \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/mei401 \
-    && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/mei401 \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
+    && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && rm -r /tmp/mei401 \
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml
     && git clone -b develop https://github.com/music-encoding/music-encoding /tmp/dev \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/meidev \
     && cp -r /tmp/meidev/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/meidev \
     && rm -r /tmp/meidev
-
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml
 
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder
 RUN git clone -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \

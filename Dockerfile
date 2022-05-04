@@ -72,7 +72,7 @@ COPY log4j.xml artifact/meigarage.wa[r] /tmp/
 
 RUN if [ "$BUILDTYPE" = "local" ] ; then \
     curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
-    && unzip -q /tmp/meigarage.zip -d /tmp/ \
+    && unzip -q /tmp/meigarage.zip -d /tmp/; \
     fi \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
     && rm -Rf ${CATALINA_WEBAPPS}/ROOT \

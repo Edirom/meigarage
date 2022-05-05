@@ -77,8 +77,8 @@ RUN if [ "$BUILDTYPE" = "local" ] ; then \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
     && rm -Rf ${CATALINA_WEBAPPS}/ROOT \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \
-    && rm /tmp/*.war \
-    && rm /tmp/*.zip \
+    && rm -f /tmp/*.war \
+    && rm -f /tmp/*.zip \
     && chmod 755 /my-docker-entrypoint.sh
 
 #check if the version of stylesheet version is supplied, if not find out latest version

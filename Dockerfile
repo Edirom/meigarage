@@ -28,8 +28,8 @@ ENV MEI_SOURCES_HOME /usr/share/xml/mei
 
 USER root:root
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends fonts-dejavu \
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends fonts-dejavu \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     fonts-baekmuk \
@@ -43,7 +43,9 @@ RUN apt-get update \
     librsvg2-bin \
     curl \
     libxml2-utils \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/cache/apt \
+    && apt-get clean
 
 # installs lilypond into /usr/local/lilypond and /usr/local/bin as shortcut
 ADD https://lilypond.org/download/binaries/linux-64/lilypond-2.20.0-1.linux-64.sh /tmp/lilypond.sh
@@ -182,7 +184,7 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && git clone --depth 1 https://github.com/music-encoding/schema /tmp/meidev \
     && cd /tmp/meidev \
     && git rev-parse HEAD > /tmp/meidev/dev/GITHASH \
-    && cp -r /tmp/meidev/dev ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && cp -r /tmp/meidev/dev/* ${MEI_SOURCES_HOME}/music-encoding/meidev \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev/source \
     && mv ${MEI_SOURCES_HOME}/music-encoding/meidev/mei-source_canonicalized.xml ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml \
     && rm -r /tmp/meidev

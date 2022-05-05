@@ -185,13 +185,13 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && rm -r /tmp/mei401 \
     && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml \
-    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev \
-    && git clone --depth 1 https://github.com/music-encoding/schema /tmp/meidev \
+    && git clone --depth 1 -b develop https://github.com/music-encoding/music-encoding /tmp/meidev \
     && cd /tmp/meidev \
-    && git rev-parse HEAD > /tmp/meidev/dev/GITHASH \
-    && cp -r /tmp/meidev/dev/* ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && git rev-parse HEAD > /tmp/meidev/GITHASH \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev/customizations \
+    && cp -r /tmp/meidev/customizations/* ${MEI_SOURCES_HOME}/music-encoding/meidev/customizations \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev/source \
-    && mv ${MEI_SOURCES_HOME}/music-encoding/meidev/mei-source_canonicalized.xml ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml \
+    && curl -s -L -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml https://raw.githubusercontent.com/music-encoding/schema/main/dev/mei-source_canonicalized.xml \
     && rm -r /tmp/meidev
 
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder

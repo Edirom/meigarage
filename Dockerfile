@@ -13,7 +13,7 @@ LABEL maintainer="Anne Ferger and Peter Stadler for the ViFE"
 
 ARG VERSION_STYLESHEET=latest
 ARG VERSION_ODD=latest
-ARG VERSION_ENCODING_TOOLS=latest
+#ARG VERSION_ENCODING_TOOLS=latest we need to use the newest version, latest release is too old
 ARG VERSION_W3C_MUSICXML=latest
 ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
@@ -112,16 +112,21 @@ RUN if [ "$VERSION_ODD" = "latest" ] ; then \
     && rm -r /tmp/odd
 
 #https://github.com/music-encoding/encoding-tools/releases/latest
-RUN if [ "$VERSION_ENCODING_TOOLS" = "latest" ] ; then \
-    VERSION_ENCODING_TOOLS=$(curl "https://api.github.com/repos/music-encoding/encoding-tools/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
-    fi \
-    && echo "Encoding tools version set to ${VERSION_ENCODING_TOOLS}" \
+#RUN if [ "$VERSION_ENCODING_TOOLS" = "latest" ] ; then \
+#    VERSION_ENCODING_TOOLS=$(curl "https://api.github.com/repos/music-encoding/encoding-tools/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
+#    fi \
+#    && echo "Encoding tools version set to ${VERSION_ENCODING_TOOLS}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
-    && curl -s -L -o /tmp/encoding.zip https://github.com/music-encoding/encoding-tools/archive/refs/tags/v${VERSION_ENCODING_TOOLS}.zip \
-    && unzip /tmp/encoding.zip -d /tmp/encoding \
-    && rm /tmp/encoding.zip \
+#    && curl -s -L -o /tmp/encoding.zip https://github.com/music-encoding/encoding-tools/archive/refs/tags/v${VERSION_ENCODING_TOOLS}.zip \
+#    && unzip /tmp/encoding.zip -d /tmp/encoding \
+#    && rm /tmp/encoding.zip \
+#    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
+#    && cp -r /tmp/encoding/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
+#    && rm -r /tmp/encoding
+#clone the latest version of https://github.com/music-encoding/encoding-tools/
+RUN git clone --depth 1 -b main https://github.com/music-encoding/encoding-tools /tmp/encoding \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
-    && cp -r /tmp/encoding/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
+    && cp -r /tmp/encoding/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
     && rm -r /tmp/encoding
 
 #https://github.com/w3c/musicxml/releases/latest

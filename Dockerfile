@@ -51,7 +51,7 @@ RUN chmod a+x /tmp/lilypond.sh \
     && /tmp/lilypond.sh --batch
 
 # clone and run
-RUN git clone -b master https://github.com/rism-digital/verovio /tmp/verovio \
+RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/verovio \
     && cd /tmp/verovio/tools \
     && cmake ../cmake \
     && make -j 8 \
@@ -179,11 +179,16 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && rm -r /tmp/mei401 \
     && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev \
-    && git clone -b develop https://github.com/music-encoding/music-encoding ${MEI_SOURCES_HOME}/music-encoding/meidev \
-    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml 
+    && git clone --depth 1 https://github.com/music-encoding/schema /tmp/meidev \
+    && cd /tmp/meidev \
+    && git rev-parse HEAD > /tmp/meidev/dev/GITHASH \
+    && cp -r /tmp/meidev/dev ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev/source \
+    && mv ${MEI_SOURCES_HOME}/music-encoding/meidev/mei-source_canonicalized.xml ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml \
+    && rm -r /tmp/meidev
 
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder
-RUN git clone -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \
+RUN git clone --depth 1 -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/data-configuration \
     && cp -r /tmp/data-configuration/*  ${MEI_SOURCES_HOME}/music-stylesheets/data-configuration \
     && rm -r /tmp/data-configuration

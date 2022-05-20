@@ -458,7 +458,7 @@ public class ConversionServlet extends HttpServlet {
 		    } else if (cpath.getOutputDataType().getMimeType()
 			       .equals(APPLICATION_ODT)) {
 			fileExt = ODT_EXT; 
-		    }else {
+		    } else {
 			fileExt = ZIP_EXT;
 		    }
 		    response.setHeader("Content-Disposition",

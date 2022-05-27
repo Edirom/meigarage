@@ -134,12 +134,31 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.9.0</version>
+            <version>3.10.1</version>
             <configuration>
                 <source>11</source>
                 <target>11</target>
             </configuration>
         </plugin>
+      <plugin>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-maven-plugin</artifactId>
+        <version>2.2.0</version>
+        <configuration>
+          <outputFileName>openapi</outputFileName>
+          <outputPath>${project.build.directory}/generated-specs</outputPath>
+          <outputFormat>JSONANDYAML</outputFormat>
+          <prettyPrint>TRUE</prettyPrint>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>resolve</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -148,6 +167,22 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>compile</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-jaxrs2 -->
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-jaxrs2</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-jaxrs2-servlet-initializer-v2</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>

@@ -306,9 +306,9 @@ public class ConversionServlet extends HttpServlet {
             parameters = {
                     @Parameter(
                             in = ParameterIn.QUERY,
-                            description = "Conversion parameters",
+                            description = "Conversion properties",
                             required = false,
-                            name = "CONV_PARAMS",
+                            name = "properties",
                             schema = @Schema(implementation = String.class))
             },
             responses = {

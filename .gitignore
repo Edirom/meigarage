@@ -1,5 +1,7 @@
 *
 !*/
+.idea/
+!src/main/webapp/*
 !.gitignore
 !*.gitattributes
 !pom.xml

@@ -21,8 +21,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
@@ -55,14 +70,27 @@ import pl.psnc.dl.ege.webapp.request.RequestResolvingException;
 
 /**
  * EGE RESTful WebService interface.
- * 
+ *
  * Conversion web service servlet, accepting requests in REST WS manner.
- * 
+ *
  * @author mariuszs
  */
 /*
  * TODO : Metody tworzace XML wrzucic do osobnej klasy lub uzyc Apache Velocity.
  */
+@OpenAPIDefinition(info =
+@Info(
+        title = "EGE Webservice",
+        version = "1.0",
+        description = "EGE Webservice API to convert, validate and customize MEI related data.",
+        license = @License(name = " GPL-3.0 license", url = "https://www.gnu.org/licenses/gpl-3.0.en.html"),
+        contact = @Contact(url = "https://meigarage.edirom.de", name = "Anne Ferger", email = "anne.ferger@upb.de")
+), tags = {
+        @Tag(name = "ege-webservice", description = "Conversion, Validation and Customization")
+},
+        externalDocs = @ExternalDocumentation(description = "find out more at GitHub", url = "https://github.com/Edirom/MEIGarage")
+)
+@Path("/Conversions")
 public class ConversionServlet extends HttpServlet {
 
 	private static final String imagesDirectory = "media";
@@ -93,57 +121,70 @@ public class ConversionServlet extends HttpServlet {
 
 	public static final String R_WRONG_METHOD = "Wrong method: GET, expected: POST.";
 
-	public static final String CONVERSIONS_SLICE_BASE = "Conversions/";
+    public static final String CONVERSIONS_SLICE_BASE = "Conversions/";
 
-	public static final String ZIP_EXT = ".zip";
+    public static final String ZIP_EXT = ".zip";
 
-	public static final String DOCX_EXT = ".docx";
+    public static final String DOCX_EXT = ".docx";
 
-	public static final String EPUB_EXT = ".epub";
+    public static final String EPUB_EXT = ".epub";
 
-	public static final String ODT_EXT = ".odt";
+    public static final String ODT_EXT = ".odt";
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ConversionServlet() {
-		super();
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ConversionServlet() {
+        super();
+    }
 
-	/**
-	 * Serves GET requests - responses are : list of input data types and lists
-	 * of possible conversions paths.
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * Serves GET requests - responses are : list of input data types and lists
+     * of possible conversions paths.
+     */
+    @Override
+    @GET
+    @Operation(summary = "Get conversions", tags = "ege-webservice", description = "Return list of input data types and lists of possible conversions paths", responses = {
+            @ApiResponse(
+                    description = "List of possible conversions is returned",
+                    responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(
+                    description = "Wrong method error message if the method is called wrong",
+                    responseCode = "405",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    public void doGet(
+            @Parameter(hidden = true) HttpServletRequest request,
+            @Parameter(hidden = true) HttpServletResponse response) throws ServletException, IOException {
 
-		try {
-			RequestResolver rr = new ConversionRequestResolver(request,
-					Method.GET);
-			if (rr.getOperationId().equals(OperationId.PRINT_CONVERSIONS_PATHS)) {
-				DataType idt = (DataType) rr.getData();
-				EGE ege = new EGEImpl();
-				List<ConversionsPath> paths = ege.findConversionPaths(idt);
-				printConversionsPaths(response, rr, paths);
-			} else if (rr.getOperationId()
-					.equals(OperationId.PRINT_INPUT_TYPES)) {
-				EGE ege = new EGEImpl();
-				Set<DataType> inpfo = ege.returnSupportedInputFormats();
-				if (inpfo.size() == 0) {
-					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-					return;
-				}
-				printConversionPossibilities(response, rr, inpfo);
-			}
+        try {
+            RequestResolver rr = new ConversionRequestResolver(request,
+                    Method.GET);
+            if (rr.getOperationId().equals(OperationId.PRINT_CONVERSIONS_PATHS)) {
+                DataType idt = (DataType) rr.getData();
+                EGE ege = new EGEImpl();
+                List<ConversionsPath> paths = ege.findConversionPaths(idt);
+                printConversionsPaths(response, rr, paths);
+            } else if (rr.getOperationId()
+                    .equals(OperationId.PRINT_INPUT_TYPES)) {
+                EGE ege = new EGEImpl();
+                Set<DataType> inpfo = ege.returnSupportedInputFormats();
+                if (inpfo.size() == 0) {
+                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                    return;
+                }
+                printConversionPossibilities(response, rr, inpfo);
+            }
 
-		} catch (RequestResolvingException ex) {
-			if (ex.getStatus().equals(
-					RequestResolvingException.Status.WRONG_METHOD)) {
-				response.sendError(405, R_WRONG_METHOD);
-			} else {
-				throw new ServletException(ex);
-			}
-		}
+        } catch (RequestResolvingException ex) {
+            if (ex.getStatus().equals(
+                    RequestResolvingException.Status.WRONG_METHOD)) {
+                response.sendError(405, R_WRONG_METHOD);
+            } else {
+                throw new ServletException(ex);
+            }
+        }
 
 	}
 
@@ -236,148 +277,166 @@ public class ConversionServlet extends HttpServlet {
 	protected void printConversionPossibilities(HttpServletResponse response,
 			RequestResolver rr, Set<DataType> inputDataTypes)
 			throws IOException {
-		PrintWriter out = response.getWriter();
-	    try {
-		response.setContentType("text/xml");
-		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		out.println("<input-data-types xmlns:xlink=\"http://www.w3.org/1999/xlink\">");
-		String prefix = rr.getRequest().getRequestURL().toString()
-				+ (rr.getRequest().getRequestURL().toString().endsWith(SLASH) ? ""
-						: "/");
-		for (DataType dt : inputDataTypes) {
-			out.println("<input-data-type id=\"" + dt.toString()
-					+ "\" xlink:href=\"" + prefix + rr.encodeDataType(dt)
-					+ "/\" />");
-		}
-		out.println("</input-data-types>");
-	    }
-	    finally {
-		out.close();
-	    }
-	}
+        PrintWriter out = response.getWriter();
+        try {
+            response.setContentType("text/xml");
+            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            out.println("<input-data-types xmlns:xlink=\"http://www.w3.org/1999/xlink\">");
+            String prefix = rr.getRequest().getRequestURL().toString()
+                    + (rr.getRequest().getRequestURL().toString().endsWith(SLASH) ? ""
+                    : "/");
+            for (DataType dt : inputDataTypes) {
+                out.println("<input-data-type id=\"" + dt.toString()
+                        + "\" xlink:href=\"" + prefix + rr.encodeDataType(dt)
+                        + "/\" />");
+            }
+            out.println("</input-data-types>");
+        } finally {
+            out.close();
+        }
+    }
 
-	/**
-	 * Servers POST method - performs conversions over specified within URL
-	 * conversions path.
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		try {
-			ConversionRequestResolver rr = new ConversionRequestResolver(
-					request, Method.POST);
-			List<DataType> pathFrame = (List<DataType>) rr.getData();
-			performConversion(response, rr, pathFrame);
-		} catch (RequestResolvingException ex) {
-			if (ex.getStatus().equals(
-					RequestResolvingException.Status.BAD_REQUEST)) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			} else if (ex.getStatus().equals(
-					RequestResolvingException.Status.WRONG_METHOD)) {
-				response.sendError(405, R_WRONG_METHOD);
-			} else {
-				throw new ServletException(ex);
-			}
-		} catch (Exception ex) {
-			throw new ServletException(ex);
-		}
-	}
+    /**
+     * Servers POST method - performs conversions over specified within URL
+     * conversions path.
+     */
+    @Override
+    @POST
+    @Operation(summary = "Do conversions", tags = "ege-webservice", description = "Convert files into different data formats",
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.QUERY,
+                            description = "Conversion properties",
+                            required = false,
+                            name = "properties",
+                            schema = @Schema(implementation = String.class))
+            },
+            responses = {
+                    @ApiResponse(
+                            description = "The content of the converted file",
+                            responseCode = "200"),
+                    @ApiResponse(
+                            description = "Wrong method error message if the method is called wrong",
+                            responseCode = "405",
+                            content = @Content(schema = @Schema(implementation = String.class)))
+            })
+    public void doPost(
+            @Parameter(hidden = true) HttpServletRequest request,
+            @Parameter(hidden = true) HttpServletResponse response) throws ServletException, IOException {
+        try {
+            ConversionRequestResolver rr = new ConversionRequestResolver(
+                    request, Method.POST);
+            List<DataType> pathFrame = (List<DataType>) rr.getData();
+            performConversion(response, rr, pathFrame);
+        } catch (RequestResolvingException ex) {
+            if (ex.getStatus().equals(
+                    RequestResolvingException.Status.BAD_REQUEST)) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            } else if (ex.getStatus().equals(
+                    RequestResolvingException.Status.WRONG_METHOD)) {
+                response.sendError(405, R_WRONG_METHOD);
+            } else {
+                throw new ServletException(ex);
+            }
+        } catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+    }
 
-	/*
-	 * Performs conversion.
-	 */
-	protected void performConversion(HttpServletResponse response,
-			ConversionRequestResolver rr, List<DataType> pathFrame)
-			throws IOException, FileUploadException, EGEException,
-			ConverterException, RequestResolvingException {
-		EGE ege = new EGEImpl();
-		List<ConversionsPath> cp = ege.findConversionPaths(pathFrame.get(0));
-		ConversionsPath cpath = null;
-		boolean found = false;	
-		InputStream is = null;
-		String fname;
-		for (ConversionsPath path : cp) {
-			if ((pathFrame.size() - 1) != path.getPath().size()) {
-				continue;
-			}
-			found = true;
-			int count = 1;
-			for (ConversionAction ca : path.getPath()) {
-				if (!ca.getConversionOutputType().equals(pathFrame.get(count))) {
-					found = false;
-					break;
-				}
-				count++;
-			}
-			if (found) {
-				cpath = path;
-				break;
-			}
-		}
-		if (!found) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		} else {
-		if (ServletFileUpload.isMultipartContent(rr.getRequest())) { 
-		    ServletFileUpload upload = new ServletFileUpload();
-			FileItemIterator iter = upload.getItemIterator(rr.getRequest());
-			while (iter.hasNext()) {
-			    FileItemStream item = iter.next();
-			    if (!item.isFormField()) {
-				is = item.openStream();
-				int dotIndex = item.getName().lastIndexOf(".");					
-				fname = null;						
-				if(dotIndex == -1 || dotIndex == 0) fname = item.getName();	
-				else fname = item.getName().substring(0, dotIndex);				
-				// creating temporary data buffer
-				DataBuffer buffer = new DataBuffer(0, EGEConstants.BUFFER_TEMP_PATH);
-				String alloc = buffer.allocate(is);
-				InputStream ins = buffer.getDataAsStream(alloc);
-				is.close();
-				// input validation - print result if fatal error
-				// occurs.
-				try {
-				    ValidationResult vRes = ege.performValidation(ins, cpath.getInputDataType());
-				    if (vRes.getStatus().equals(ValidationResult.Status.FATAL)) {
-					ValidationServlet valServ = new ValidationServlet();
-					valServ.printValidationResult(response, vRes);
-					try {
-					    ins.close();
-					} finally {
-					    buffer.removeData(alloc, true);
-					}
-					return;
-				    }
-				} catch (ValidatorException vex) {
-				    LOGGER.debug(vex.getMessage());
-				} finally {
-				    try {
-					ins.close();
-				    } catch (Exception ex) {
-					// do nothing
-				    }
-				}
-				File bDir = new File(buffer.getDataDir(alloc));
-				doConvert(response, rr, ege, cpath, ins, fname, iter, bDir);
-				buffer.clear(true);
-			    }
-			}
-		}
-		else
-		    {
-			FileItemIterator iter = null;
-			String inputData = rr.getRequest().getParameter("input");
-			fname = rr.getRequest().getParameter("filename");
-			if (inputData == null || inputData.trim().isEmpty()) {
-			    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			    return;
-			}
-			is = new ByteArrayInputStream(inputData.getBytes());
-			DataBuffer buffer = new DataBuffer(0, EGEConstants.BUFFER_TEMP_PATH);
-			String alloc = buffer.allocate(is);
-			InputStream ins = buffer.getDataAsStream(alloc);
-			is.close();
-			File bDir = new File(buffer.getDataDir(alloc));
-			doConvert(response, rr, ege, cpath, ins, fname, iter, bDir);
+    /*
+     * Performs conversion.
+     */
+    protected void performConversion(HttpServletResponse response,
+                                     ConversionRequestResolver rr, List<DataType> pathFrame)
+            throws IOException, FileUploadException, EGEException,
+            ConverterException, RequestResolvingException {
+        EGE ege = new EGEImpl();
+        List<ConversionsPath> cp = ege.findConversionPaths(pathFrame.get(0));
+        ConversionsPath cpath = null;
+        boolean found = false;
+        InputStream is = null;
+        String fname;
+        for (ConversionsPath path : cp) {
+            if ((pathFrame.size() - 1) != path.getPath().size()) {
+                continue;
+            }
+            found = true;
+            int count = 1;
+            for (ConversionAction ca : path.getPath()) {
+                if (!ca.getConversionOutputType().equals(pathFrame.get(count))) {
+                    found = false;
+                    break;
+                }
+                count++;
+            }
+            if (found) {
+                cpath = path;
+                break;
+            }
+        }
+        if (!found) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        } else {
+            if (ServletFileUpload.isMultipartContent(rr.getRequest())) {
+                ServletFileUpload upload = new ServletFileUpload();
+                FileItemIterator iter = upload.getItemIterator(rr.getRequest());
+                while (iter.hasNext()) {
+                    FileItemStream item = iter.next();
+                    if (!item.isFormField()) {
+                        is = item.openStream();
+                        int dotIndex = item.getName().lastIndexOf(".");
+                        fname = null;
+                        if (dotIndex == -1 || dotIndex == 0) fname = item.getName();
+                        else fname = item.getName().substring(0, dotIndex);
+                        // creating temporary data buffer
+                        DataBuffer buffer = new DataBuffer(0, EGEConstants.BUFFER_TEMP_PATH);
+                        String alloc = buffer.allocate(is);
+                        InputStream ins = buffer.getDataAsStream(alloc);
+                        is.close();
+                        // input validation - print result if fatal error
+                        // occurs.
+                        try {
+                            ValidationResult vRes = ege.performValidation(ins, cpath.getInputDataType());
+                            if (vRes.getStatus().equals(ValidationResult.Status.FATAL)) {
+                                ValidationServlet valServ = new ValidationServlet();
+                                valServ.printValidationResult(response, vRes);
+                                try {
+                                    ins.close();
+                                } finally {
+                                    buffer.removeData(alloc, true);
+                                }
+                                return;
+                            }
+                        } catch (ValidatorException vex) {
+                            LOGGER.debug(vex.getMessage());
+                        } finally {
+                            try {
+                                ins.close();
+                            } catch (Exception ex) {
+                                // do nothing
+                            }
+                        }
+                        File bDir = new File(buffer.getDataDir(alloc));
+                        doConvert(response, rr, ege, cpath, ins, fname, iter, bDir);
+                        buffer.clear(true);
+                    }
+                }
+            } else {
+                FileItemIterator iter = null;
+                String inputData = rr.getRequest().getParameter("input");
+                fname = rr.getRequest().getParameter("filename");
+                if (inputData == null || inputData.trim().isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
+                is = new ByteArrayInputStream(inputData.getBytes());
+                DataBuffer buffer = new DataBuffer(0, EGEConstants.BUFFER_TEMP_PATH);
+                String alloc = buffer.allocate(is);
+                InputStream ins = buffer.getDataAsStream(alloc);
+                is.close();
+                File bDir = new File(buffer.getDataDir(alloc));
+                doConvert(response, rr, ege, cpath, ins, fname, iter, bDir);
 			buffer.clear(true);
 		    }
 
@@ -385,13 +444,13 @@ public class ConversionServlet extends HttpServlet {
 	}
 
 	private void doConvert(HttpServletResponse response,
-			       ConversionRequestResolver rr, 
-			       EGE ege, 
-			       ConversionsPath cpath, 
-			       InputStream ins, 
-			       String fname, 
-			       FileItemIterator iter, 
-			       File buffDir)
+                           ConversionRequestResolver rr,
+                           EGE ege,
+                           ConversionsPath cpath,
+                           InputStream ins,
+                           String fname,
+                           FileItemIterator iter,
+                           File buffDir)
 			throws FileUploadException, IOException, RequestResolvingException,
 			EGEException, FileNotFoundException, ConverterException,
 			ZipException {
@@ -450,86 +509,86 @@ public class ConversionServlet extends HttpServlet {
 		if (isComplex) {
 		    String fileExt;
 		    if (cpath.getOutputDataType().getMimeType()
-			.equals(APPLICATION_MSWORD)) {
-			fileExt = DOCX_EXT;
-		    } else if (cpath.getOutputDataType().getMimeType()
-			       .equals(APPLICATION_EPUB)) {
-			fileExt = EPUB_EXT; 
-		    } else if (cpath.getOutputDataType().getMimeType()
-			       .equals(APPLICATION_ODT)) {
-			fileExt = ODT_EXT; 
-		    } else {
-			fileExt = ZIP_EXT;
-		    }
-		    response.setHeader("Content-Disposition",
-				       "attachment; filename=\"" + fname + fileExt + "\"");
-		    FileInputStream fis = new FileInputStream(
-							      szipFile);
-		    os = response.getOutputStream();
-		    try {
-			EGEIOUtils.copyStream(fis, os);
-		    } finally {
-			fis.close();
-		    }
-		} else {
-		    String fileExt = getMimeExtensionProvider()
-			.getFileExtension(cpath.getOutputDataType().getMimeType());
+                    .equals(APPLICATION_MSWORD)) {
+                fileExt = DOCX_EXT;
+            } else if (cpath.getOutputDataType().getMimeType()
+                    .equals(APPLICATION_EPUB)) {
+                fileExt = EPUB_EXT;
+            } else if (cpath.getOutputDataType().getMimeType()
+                    .equals(APPLICATION_ODT)) {
+                fileExt = ODT_EXT;
+            } else {
+                fileExt = ZIP_EXT;
+            }
+            response.setHeader("Content-Disposition",
+                    "attachment; filename=\"" + fname + fileExt + "\"");
+            FileInputStream fis = new FileInputStream(
+                    szipFile);
+            os = response.getOutputStream();
+            try {
+                EGEIOUtils.copyStream(fis, os);
+            } finally {
+                fis.close();
+            }
+        } else {
+            String fileExt = getMimeExtensionProvider()
+                    .getFileExtension(cpath.getOutputDataType().getMimeType());
 
-		    response.setContentType(cpath.getOutputDataType().getMimeType());
-		    response.setHeader("Content-Disposition",
-				       "attachment; filename=\"" + fname + fileExt + "\"");
+            response.setContentType(cpath.getOutputDataType().getMimeType());
+            response.setHeader("Content-Disposition",
+                    "attachment; filename=\"" + fname + fileExt + "\"");
 
-		    os = response.getOutputStream();
-		    EGEIOUtils.unzipSingleFile(new ZipFile(szipFile), os);
-		}
-	    } finally {
-		ins.close();
-		if (os != null) {
-		    os.flush();
-		    os.close();
-		}
-		szipFile.delete();
-		if (zipFile != null) {
-		    zipFile.delete();
-		}
-	    }
-	}
+            os = response.getOutputStream();
+            EGEIOUtils.unzipSingleFile(new ZipFile(szipFile), os);
+        }
+        } finally {
+            ins.close();
+            if (os != null) {
+                os.flush();
+                os.close();
+            }
+            szipFile.delete();
+            if (zipFile != null) {
+                zipFile.delete();
+            }
+        }
+    }
 
-	private void applyConversionsProperties(String properties, ConversionsPath cP, String fileName) 
-					throws RequestResolvingException {
-		if(properties!=null && properties.trim().length()!=0) {
-			StringBuffer sb = new StringBuffer();
-			sb.append("<properties>");
-			sb.append(properties);
-			sb.append("<fileInfo name=\"" + fileName + "\"></fileInfo></properties>");
-			LOGGER.debug(sb.toString());
-			ConversionsPropertiesHandler cpp = new ConversionsPropertiesHandler(sb.toString());
-			cpp.applyPathProperties(cP);
-		} else {// apply empty properties if no properties were provided
-			for (int i = 0; i < cP.getPath().size(); i++) {
-				cP.getPath().get(i).getConversionActionArguments().setProperties(null);
-			}
-		}
-	}
+    private void applyConversionsProperties(String properties, ConversionsPath cP, String fileName)
+            throws RequestResolvingException {
+        if (properties != null && properties.trim().length() != 0) {
+            StringBuffer sb = new StringBuffer();
+            sb.append("<properties>");
+            sb.append(properties);
+            sb.append("<fileInfo name=\"" + fileName + "\"></fileInfo></properties>");
+            LOGGER.debug(sb.toString());
+            ConversionsPropertiesHandler cpp = new ConversionsPropertiesHandler(sb.toString());
+            cpp.applyPathProperties(cP);
+        } else {// apply empty properties if no properties were provided
+            for (int i = 0; i < cP.getPath().size(); i++) {
+                cP.getPath().get(i).getConversionActionArguments().setProperties(null);
+            }
+        }
+    }
 
-	/**
-	 * Returns local names provider.
-	 * 
-	 * @return
-	 */
-	public LabelProvider getLabelProvider() {
-		return (LabelProvider) this.getServletContext().getAttribute(
-				PreConfig.LABEL_PROVIDER);
-	}
+    /**
+     * Returns local names provider.
+     *
+     * @return
+     */
+    public LabelProvider getLabelProvider() {
+        return (LabelProvider) this.getServletContext().getAttribute(
+                PreConfig.LABEL_PROVIDER);
+    }
 
-	/**
-	 * Returns map that contains mapping of mime type to file extension.
-	 * 
-	 * @return
-	 */
-	public MimeExtensionProvider getMimeExtensionProvider() {
-		return (MimeExtensionProvider) this.getServletContext().getAttribute(
-				PreConfig.MIME_EXTENSION_PROVIDER);
-	}
+    /**
+     * Returns map that contains mapping of mime type to file extension.
+     *
+     * @return
+     */
+    public MimeExtensionProvider getMimeExtensionProvider() {
+        return (MimeExtensionProvider) this.getServletContext().getAttribute(
+                PreConfig.MIME_EXTENSION_PROVIDER);
+    }
 
 }

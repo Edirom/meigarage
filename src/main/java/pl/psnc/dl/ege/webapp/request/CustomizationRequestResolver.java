@@ -1,6 +1,7 @@
 package pl.psnc.dl.ege.webapp.request;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -12,7 +13,7 @@ public class CustomizationRequestResolver extends RequestResolver {
 
     private static final String EN = "en";
 
-    private static final Logger LOGGER = Logger
+    private static final Logger LOGGER = LogManager
             .getLogger(CustomizationRequestResolver.class);
 
     public CustomizationRequestResolver(HttpServletRequest request, Method method)

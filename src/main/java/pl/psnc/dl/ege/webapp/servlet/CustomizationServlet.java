@@ -4,7 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
 import pl.psnc.dl.ege.configuration.EGEConstants;
@@ -29,7 +30,7 @@ import java.util.*;
 
 public class CustomizationServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger
+    private static final Logger LOGGER = LogManager
             .getLogger(CustomizationServlet.class);
 
     private static final long serialVersionUID = 1L;

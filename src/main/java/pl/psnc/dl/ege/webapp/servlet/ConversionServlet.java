@@ -42,7 +42,8 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
@@ -109,7 +110,7 @@ public class ConversionServlet extends HttpServlet {
 
 	private static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
 
-	private static final Logger LOGGER = Logger			.getLogger(ConversionServlet.class);
+	private static final Logger LOGGER = LogManager.getLogger(ConversionServlet.class);
 
 	private static final long serialVersionUID = 1L;
 

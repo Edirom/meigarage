@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
+authors:
 - family-names: "Parkoła"
   given-names: "Tomasz"
 - family-names: "Stanisławczyk"
@@ -15,12 +16,16 @@ authors:
   given-names: "Marcin"  
 - family-names: "Mittelbach"
   given-names: "Arno"
+- family-names: "Cayless"
+  given-names: "Hugh"
+- family-names: "Viglianti"
+  given-names: "Raffaele"
 - family-names: "Röwenstrunk"
   given-names: "Daniel"
 - family-names: "Stadler"
   given-names: "Peter"
-- family-names: "Anne"
-  given-names: "Ferger"
+- family-names: "Ferger"
+  given-names: "Anne"
 title: "MEIGarage"
 version: 0.5.2
 doi: 

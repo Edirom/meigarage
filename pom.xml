@@ -211,7 +211,7 @@
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>lilypond-converter</artifactId>
-      <version>0.2.1</version>
+      <version>0.2.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

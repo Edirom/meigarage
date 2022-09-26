@@ -2,6 +2,7 @@
 !*/
 .idea/
 !src/main/webapp/*
+!src/main/webapp/Info/*
 !.gitignore
 !*.gitattributes
 !pom.xml
@@ -22,3 +23,6 @@ target/
 !.dockerignore
 !docker-entrypoint.sh
 !Dockerfile
+!doc/*.xsl
+!doc/*.html
+

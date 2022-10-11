@@ -1,15 +1,23 @@
 package pl.psnc.dl.ege.webapp.servlet;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.json.XML;
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.CustomizationException;
+import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.CustomizationSetting;
 import pl.psnc.dl.ege.types.CustomizationSourceInputType;
 import pl.psnc.dl.ege.types.DataType;
@@ -23,6 +31,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,9 +56,22 @@ public class CustomizationServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+    @GET
+	@Path("ege-webservice/Conversions")
+    @Operation(summary = "Get all available conversions", tags = "ege-webservice", description = "Return list of input data types and lists of possible conversions paths", responses = {
+            @ApiResponse(
+                    description = "List of possible conversions is returned",
+                    responseCode = "200",
+                    content = @Content(mediaType = "text/xml", schema = @Schema(implementation= ConversionsPath.class))),
+            @ApiResponse(
+                    description = "Wrong method error message if the method is called wrong",
+                    responseCode = "405")
+    })
+    public void doGet(
+            @Parameter(hidden = true) HttpServletRequest request,
+            @Parameter(hidden = true) HttpServletResponse response) throws ServletException, IOException {
+
         try {
             //resolve request and catch any errors
             RequestResolver rr = new CustomizationRequestResolver(request,
@@ -72,6 +96,7 @@ public class CustomizationServlet extends HttpServlet {
                                                      RequestResolver rr)
             throws ServletException {
         EGE ege = new EGEImpl();
+        response.setContentType("text/xml;charset=utf-8");
         try {
             PrintWriter out = response.getWriter();
             Set<CustomizationSetting> css = ((EGEImpl) ege).returnSupportedCustomizationSettings();
@@ -79,13 +104,13 @@ public class CustomizationServlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 return;
             }
-            response.setContentType("text/xml");
-            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            out
-                    .println("<customizations xmlns:xlink=\"http://www.w3.org/1999/xlink\">");
-            String prefix = rr.getRequest().getRequestURL().toString()
-                    + (rr.getRequest().getRequestURL().toString().endsWith(
+            String baseprefix = rr.getRequest().getScheme() + "://" +
+                    rr.getRequest().getServerName() + ((rr.getRequest().getServerPort() == 80 ||  rr.getRequest().getServerPort() == 443) ? "" : ":" + rr.getRequest().getServerPort())  +
+                    rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().toString().endsWith(
                     RequestResolver.SLASH) ? "" : "/");
+            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            out.println("<customizations xmlns:xlink=\"http://www.w3.org/1999/xlink\"  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"" +
+                    baseprefix + "schemas/conversions-paths.xsd\">");
             for (CustomizationSetting cs : css) {
                 out.println("<customization-setting id=\"" + cs.toString() + "\">");
 
@@ -116,9 +141,42 @@ public class CustomizationServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+    @POST
+	@Path("ege-webservice/Conversions/{input-document-type}/{output-document-type}")
+    @Operation(summary = "Do conversions", tags = "ege-webservice", description = "Convert files into different data formats",
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.QUERY,
+                            description = "Conversion properties",
+                            required = false,
+                            name = "properties",
+                            schema = @Schema(type= "string", format="text/xml")),
+					@Parameter(
+							in = ParameterIn.PATH,
+							description = "Input document type",
+							required = true,
+							name = "input-document-type",
+							schema = @Schema(type= "string", format="text/plain")),
+					@Parameter(
+							in = ParameterIn.PATH,
+							description = "Output document type",
+							required = true,
+							name = "output-document-type",
+							schema = @Schema(type= "string", format="text/plain"))
+            },
+            responses = {
+                    @ApiResponse(
+                            description = "The content of the converted file",
+                            responseCode = "200",
+							content = @Content(mediaType = "text/xml", schema = @Schema(implementation = XML.class))),
+                    @ApiResponse(
+                            description = "Wrong method error message if the method is called wrong",
+                            responseCode = "405")
+            })
+    public void doPost(
+            @Parameter(hidden = true) HttpServletRequest request,
+            @Parameter(hidden = true) HttpServletResponse response) throws ServletException, IOException {
         try {
             RequestResolver rr = new CustomizationRequestResolver(request,
                     Method.POST);

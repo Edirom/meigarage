@@ -17,10 +17,8 @@ import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.CustomizationException;
-import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.CustomizationSetting;
 import pl.psnc.dl.ege.types.CustomizationSourceInputType;
-import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.webapp.request.Method;
 import pl.psnc.dl.ege.webapp.request.RequestResolver;
@@ -58,12 +56,12 @@ public class CustomizationServlet extends HttpServlet {
      */
     @Override
     @GET
-	@Path("ege-webservice/Conversions")
-    @Operation(summary = "Get all available conversions", tags = "ege-webservice", description = "Return list of input data types and lists of possible conversions paths", responses = {
+	@Path("ege-webservice/Customization")
+    @Operation(summary = "Get all available customizations", tags = "ege-webservice", description = "Return list of input data types and lists of possible customization paths", responses = {
             @ApiResponse(
-                    description = "List of possible conversions is returned",
+                    description = "List of possible customizations is returned",
                     responseCode = "200",
-                    content = @Content(mediaType = "text/xml", schema = @Schema(implementation= ConversionsPath.class))),
+                    content = @Content(mediaType = "text/xml")),
             @ApiResponse(
                     description = "Wrong method error message if the method is called wrong",
                     responseCode = "405")
@@ -110,7 +108,7 @@ public class CustomizationServlet extends HttpServlet {
                     RequestResolver.SLASH) ? "" : "/");
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<customizations xmlns:xlink=\"http://www.w3.org/1999/xlink\"  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"" +
-                    baseprefix + "schemas/conversions-paths.xsd\">");
+                    baseprefix + "schemas/customizations.xsd\">");
             for (CustomizationSetting cs : css) {
                 out.println("<customization-setting id=\"" + cs.toString() + "\">");
 
@@ -143,31 +141,31 @@ public class CustomizationServlet extends HttpServlet {
      */
     @Override
     @POST
-	@Path("ege-webservice/Conversions/{input-document-type}/{output-document-type}")
-    @Operation(summary = "Do conversions", tags = "ege-webservice", description = "Convert files into different data formats",
+	@Path("ege-webservice/Customization/{customization-setting}/{source}/{customization}")
+    @Operation(summary = "Do customizations", tags = "ege-webservice", description = "Customize files into different data formats",
             parameters = {
                     @Parameter(
-                            in = ParameterIn.QUERY,
-                            description = "Conversion properties",
-                            required = false,
-                            name = "properties",
-                            schema = @Schema(type= "string", format="text/xml")),
+                            in = ParameterIn.PATH,
+                            description = "Customization Setting",
+                            required = true,
+                            name = "customization-setting",
+                            schema = @Schema(type= "string", format="text/plain")),
 					@Parameter(
 							in = ParameterIn.PATH,
-							description = "Input document type",
+							description = "Source",
 							required = true,
-							name = "input-document-type",
+							name = "source",
 							schema = @Schema(type= "string", format="text/plain")),
 					@Parameter(
 							in = ParameterIn.PATH,
-							description = "Output document type",
+							description = "Customization",
 							required = true,
-							name = "output-document-type",
+							name = "customization",
 							schema = @Schema(type= "string", format="text/plain"))
             },
             responses = {
                     @ApiResponse(
-                            description = "The content of the converted file",
+                            description = "The content of the customized file",
                             responseCode = "200",
 							content = @Content(mediaType = "text/xml", schema = @Schema(implementation = XML.class))),
                     @ApiResponse(

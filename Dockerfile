@@ -57,7 +57,7 @@ RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/v
     && cd /tmp/verovio/tools \
     && cmake ../cmake \
     && make -j 8 \
-    && sudo make install \
+    && make install \
     && cp /tmp/verovio/fonts/Leipzig.ttf /usr/local/share/fonts/ \
     && fc-cache
 

@@ -58,7 +58,7 @@ RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/v
     && cmake ../cmake \
     && make -j 8 \
     && sudo make install \
-    && cp /tmp/verovio/fonts/VerovioText-1.0.ttf /usr/local/share/fonts/ \
+    && cp /tmp/verovio/fonts/Leipzig.ttf /usr/local/share/fonts/ \
     && fc-cache
 
 # entrypoint script

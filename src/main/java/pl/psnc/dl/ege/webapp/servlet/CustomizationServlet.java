@@ -1,11 +1,12 @@
 package pl.psnc.dl.ege.webapp.servlet;
-
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -37,6 +38,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+@OpenAPIDefinition(tags = {
+        @Tag(name = "ege-webservice", description = "Conversion, Validation and Customization")
+})
 public class CustomizationServlet extends HttpServlet {
 
     private static final Logger LOGGER = LogManager

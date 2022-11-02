@@ -58,7 +58,7 @@ RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/v
     && cmake ../cmake \
     && make -j 8 \
     && make install \
-    && cp /tmp/verovio/fonts/VerovioText-1.0.ttf /usr/local/share/fonts/ \
+    && cp /tmp/verovio/fonts/Leipzig/Leipzig.ttf /usr/local/share/fonts/ \
     && fc-cache
 
 # entrypoint script
@@ -203,6 +203,8 @@ RUN git clone --depth 1 -b dev https://github.com/Edirom/data-configuration /tmp
 VOLUME ["/usr/share/xml/tei/stylesheet", "/usr/share/xml/tei/odd", "/user/share/xml/mei"]
 
 EXPOSE 8080 8081
+
+HEALTHCHECK CMD curl --fail http://localhost:8080/ege-webservice/Info || exit 1
 
 ENTRYPOINT ["/my-docker-entrypoint.sh"]
 CMD ["catalina.sh", "run"]

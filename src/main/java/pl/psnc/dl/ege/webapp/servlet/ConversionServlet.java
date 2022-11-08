@@ -1,21 +1,6 @@
 package pl.psnc.dl.ege.webapp.servlet;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,40 +22,15 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import org.json.XML;
-import pl.psnc.dl.ege.EGE;
-import pl.psnc.dl.ege.EGEImpl;
-import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
-import pl.psnc.dl.ege.configuration.EGEConstants;
-import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.ValidatorException;
-import pl.psnc.dl.ege.types.ConversionAction;
-import pl.psnc.dl.ege.types.ConversionsPath;
-import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.types.ValidationResult;
-import pl.psnc.dl.ege.utils.DataBuffer;
-import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.utils.IOResolver;
-import pl.psnc.dl.ege.webapp.config.LabelProvider;
-import pl.psnc.dl.ege.webapp.config.MimeExtensionProvider;
-import pl.psnc.dl.ege.webapp.config.PreConfig;
-import pl.psnc.dl.ege.webapp.request.ConversionRequestResolver;
-import pl.psnc.dl.ege.webapp.request.ConversionsPropertiesHandler;
-import pl.psnc.dl.ege.webapp.request.Method;
-import pl.psnc.dl.ege.webapp.request.OperationId;
-import pl.psnc.dl.ege.webapp.request.RequestResolver;
-import pl.psnc.dl.ege.webapp.request.RequestResolvingException;
+
 import pl.psnc.dl.ege.webapp.servlethelpers.Conversion;
 
 /**
@@ -135,11 +95,14 @@ public class ConversionServlet extends HttpServlet {
 
     public static final String ODT_EXT = ".odt";
 
+	Conversion conversion;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ConversionServlet() {
         super();
+		Conversion conversion = new Conversion();
     }
 
     /**
@@ -153,7 +116,7 @@ public class ConversionServlet extends HttpServlet {
             @ApiResponse(
                     description = "List of possible conversions is returned",
                     responseCode = "200",
-                    content = @Content(mediaType = "text/xml", schema = @Schema(implementation=ConversionsPath.class))),
+                    content = @Content(mediaType = "text/xml")),
             @ApiResponse(
                     description = "Wrong method error message if the method is called wrong",
                     responseCode = "405")
@@ -161,7 +124,7 @@ public class ConversionServlet extends HttpServlet {
     public void doGet(
             @Parameter(hidden = true) HttpServletRequest request,
             @Parameter(hidden = true) HttpServletResponse response) throws ServletException, IOException {
-			Conversion.doGetHelper(request, response);
+			conversion.doGetHelper(request, response);
 	}
 
 
@@ -205,7 +168,7 @@ public class ConversionServlet extends HttpServlet {
     public void doPost(
             @Parameter(hidden = true) HttpServletRequest request,
             @Parameter(hidden = true) HttpServletResponse response) throws ServletException, IOException {
-		Conversion.doPostHelper(request, response);
+		conversion.doPostHelper(request, response);
     }
 
 }

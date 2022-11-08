@@ -22,7 +22,7 @@
 MEIGarage is a webservice and RESTful service to transform, convert and validate various formats, focussing on the [MEI](https://music-encoding.org/) format.
 MEIGarage is based on the proven [OxGarage](https://github.com/TEIC/oxgarage). 
 
-Further information on the code structure of MEIGarage and TEIGarage can be found [here](https://github.com/Edirom/MEIGarage/blob/main/doc/code-structure.md).
+Further information on the code structure of MEIGarage and TEIGarage can be found [here](https://github.com/Edirom/MEIGarage/blob/main/doc/code-structure.md). Information in form of presentation slides and posters can be found [here](https://anneferger.github.io/MEITEIGarage/).
 
 A running instance of MEIGarage can be found at [meigarage.edirom.de](https://meigarage.edirom.de/).
 

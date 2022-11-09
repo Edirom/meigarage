@@ -185,27 +185,15 @@
       <version>2.1</version>
     </dependency>
     <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.4</version>
-      <scope>compile</scope>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.json/json -->
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20211205</version>
-    </dependency>
-    <dependency>
       <groupId>pl.psnc.dl.ege</groupId>
       <artifactId>ege-framework</artifactId>
-      <version>0.5.1</version>
+      <version>0.5.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-xsl-converter</artifactId>
-      <version>0.2.2</version>
+      <version>0.2.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -217,7 +205,7 @@
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-validator</artifactId>
-      <version>0.3.1</version>
+      <version>0.3.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

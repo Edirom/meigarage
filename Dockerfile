@@ -189,7 +189,7 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && cd /tmp/meidev \
     && git rev-parse HEAD > /tmp/meidev/GITHASH \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev \
-    && cp -r /tmp/meidev/*/*  ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && cp -r /tmp/meidev/*  ${MEI_SOURCES_HOME}/music-encoding/meidev \
     && curl -s -L -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml https://raw.githubusercontent.com/music-encoding/schema/main/dev/mei-source_canonicalized.xml \
     && rm -r /tmp/meidev
 

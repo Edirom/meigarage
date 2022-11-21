@@ -13,12 +13,13 @@ LABEL maintainer="Anne Ferger and Peter Stadler for the ViFE"
 
 ARG VERSION_STYLESHEET=latest
 ARG VERSION_ODD=latest
-ARG VERSION_ENCODING_TOOLS=latest
+#ARG VERSION_ENCODING_TOOLS=latest we need to use the newest version, latest release is too old
 ARG VERSION_W3C_MUSICXML=latest
 ARG VERSION_MEILER=latest
 #ARG VERSION_MUSIC_ENCODING=latest : no version to be specified available yet
 #ARG VERSION_DATA_CONFIGURATION=latest : no releases/versions available yet
-ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven/dev/artifact.zip
+ARG WEBSERVICE_ARTIFACT=https://nightly.link/Edirom/MEIGarage/workflows/maven_docker/dev/artifact.zip
+ARG BUILDTYPE=local
 
 ENV CATALINA_WEBAPPS ${CATALINA_HOME}/webapps
 ENV OFFICE_HOME /usr/lib/libreoffice
@@ -27,8 +28,8 @@ ENV MEI_SOURCES_HOME /usr/share/xml/mei
 
 USER root:root
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends fonts-dejavu \
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends fonts-dejavu \
     fonts-arphic-ukai \
     fonts-arphic-uming \
     fonts-baekmuk \
@@ -40,9 +41,11 @@ RUN apt-get update \
     build-essential \
     libgcc-10-dev \
     librsvg2-bin \
-    curl \  
+    curl \
     libxml2-utils \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/cache/apt \
+    && apt-get clean
 
 # installs lilypond into /usr/local/lilypond and /usr/local/bin as shortcut
 ADD https://lilypond.org/download/binaries/linux-64/lilypond-2.20.0-1.linux-64.sh /tmp/lilypond.sh
@@ -50,12 +53,12 @@ RUN chmod a+x /tmp/lilypond.sh \
     && /tmp/lilypond.sh --batch
 
 # clone and run
-RUN git clone -b master https://github.com/rism-digital/verovio /tmp/verovio \
+RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/verovio \
     && cd /tmp/verovio/tools \
     && cmake ../cmake \
     && make -j 8 \
     && make install \
-    && cp /tmp/verovio/fonts/VerovioText-1.0.ttf /usr/local/share/fonts/ \
+    && cp /tmp/verovio/fonts/Leipzig/Leipzig.ttf /usr/local/share/fonts/ \
     && fc-cache
 
 # entrypoint script
@@ -66,13 +69,18 @@ COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
 # download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
 # the war-file is zipped so we need to unzip it twice at the next stage 
-RUN rm -Rf ${CATALINA_WEBAPPS}/ROOT \
-    && curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
-    && unzip -q /tmp/meigarage.zip -d /tmp/ \
+#conditional copy in docker needs a strange hack
+COPY log4j.xml artifact/meigarage.wa[r] /tmp/
+
+RUN if [ "$BUILDTYPE" = "local" ] ; then \
+    curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
+    && unzip -q /tmp/meigarage.zip -d /tmp/; \
+    fi \
     && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
+    && rm -Rf ${CATALINA_WEBAPPS}/ROOT \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \
-    && rm /tmp/*.war \
-    && rm /tmp/*.zip \
+    && rm -f /tmp/*.war \
+    && rm -f /tmp/*.zip \
     && chmod 755 /my-docker-entrypoint.sh
 
 #check if the version of stylesheet version is supplied, if not find out latest version
@@ -104,16 +112,21 @@ RUN if [ "$VERSION_ODD" = "latest" ] ; then \
     && rm -r /tmp/odd
 
 #https://github.com/music-encoding/encoding-tools/releases/latest
-RUN if [ "$VERSION_ENCODING_TOOLS" = "latest" ] ; then \
-    VERSION_ENCODING_TOOLS=$(curl "https://api.github.com/repos/music-encoding/encoding-tools/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
-    fi \
-    && echo "Encoding tools version set to ${VERSION_ENCODING_TOOLS}" \
+#RUN if [ "$VERSION_ENCODING_TOOLS" = "latest" ] ; then \
+#    VERSION_ENCODING_TOOLS=$(curl "https://api.github.com/repos/music-encoding/encoding-tools/releases/latest" | grep -Po '"tag_name": "v\K.*?(?=")'); \   
+#    fi \
+#    && echo "Encoding tools version set to ${VERSION_ENCODING_TOOLS}" \
     # download the required tei odd and stylesheet sources in the image and move them to the respective folders ( ${TEI_SOURCES_HOME})
-    && curl -s -L -o /tmp/encoding.zip https://github.com/music-encoding/encoding-tools/archive/refs/tags/v${VERSION_ENCODING_TOOLS}.zip \
-    && unzip /tmp/encoding.zip -d /tmp/encoding \
-    && rm /tmp/encoding.zip \
+#    && curl -s -L -o /tmp/encoding.zip https://github.com/music-encoding/encoding-tools/archive/refs/tags/v${VERSION_ENCODING_TOOLS}.zip \
+#    && unzip /tmp/encoding.zip -d /tmp/encoding \
+#    && rm /tmp/encoding.zip \
+#    && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
+#    && cp -r /tmp/encoding/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
+#    && rm -r /tmp/encoding
+#clone the latest version of https://github.com/music-encoding/encoding-tools/
+RUN git clone --depth 1 -b main https://github.com/music-encoding/encoding-tools /tmp/encoding \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
-    && cp -r /tmp/encoding/*/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
+    && cp -r /tmp/encoding/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
     && rm -r /tmp/encoding
 
 #https://github.com/w3c/musicxml/releases/latest
@@ -171,10 +184,17 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && rm -r /tmp/mei401 \
-    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml
-   
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml \
+    && git clone --depth 1 -b develop https://github.com/music-encoding/music-encoding /tmp/meidev \
+    && cd /tmp/meidev \
+    && git rev-parse HEAD > /tmp/meidev/GITHASH \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && cp -r /tmp/meidev/*  ${MEI_SOURCES_HOME}/music-encoding/meidev \
+    && curl -s -L -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml https://raw.githubusercontent.com/music-encoding/schema/main/dev/mei-source_canonicalized.xml \
+    && rm -r /tmp/meidev
+
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder
-RUN git clone -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \
+RUN git clone --depth 1 -b dev https://github.com/Edirom/data-configuration /tmp/data-configuration \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/data-configuration \
     && cp -r /tmp/data-configuration/*  ${MEI_SOURCES_HOME}/music-stylesheets/data-configuration \
     && rm -r /tmp/data-configuration
@@ -182,6 +202,8 @@ RUN git clone -b dev https://github.com/Edirom/data-configuration /tmp/data-conf
 VOLUME ["/usr/share/xml/tei/stylesheet", "/usr/share/xml/tei/odd", "/user/share/xml/mei"]
 
 EXPOSE 8080 8081
+
+HEALTHCHECK CMD curl --fail http://localhost:8080/ege-webservice/Info || exit 1
 
 ENTRYPOINT ["/my-docker-entrypoint.sh"]
 CMD ["catalina.sh", "run"]

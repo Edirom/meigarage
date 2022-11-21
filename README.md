@@ -1,9 +1,11 @@
 # MEIGarage
 
-[![Build Status](https://github.com/Edirom/MEIGarage/actions/workflows/maven.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/maven.yml)
-[![Docker Automated build](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/docker.yml)
+[![Build Status](https://github.com/Edirom/MEIGarage/actions/workflows/maven_docker.yml/badge.svg)](https://github.com/Edirom/MEIGarage/actions/workflows/maven_docker.yml)
 [![GitHub license](https://img.shields.io/github/license/teic/TEIGarage.svg)](https://github.com/Edirom/MEIGarage/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/Edirom/MEIGarage.svg)](https://github.com/Edirom/MEIGarage/releases)
+[![Docker](https://img.shields.io/docker/pulls/edirom/meigarage)](https://hub.docker.com/r/edirom/meigarage)
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8F-yellow)](https://fair-software.eu)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6279/badge)](https://bestpractices.coreinfrastructure.org/projects/6279)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -20,13 +22,15 @@
 MEIGarage is a webservice and RESTful service to transform, convert and validate various formats, focussing on the [MEI](https://music-encoding.org/) format.
 MEIGarage is based on the proven [OxGarage](https://github.com/TEIC/oxgarage). 
 
-Further information on the code structure of MEIGarage and TEIGarage can be found [here](https://github.com/Edirom/MEIGarage/blob/main/doc/code-structure.md).
+Further information on the *code structure* of MEIGarage and TEIGarage can be found [here](https://github.com/Edirom/MEIGarage/blob/main/doc/code-structure.md). Information in form of *presentation slides* and posters can be found [here](https://anneferger.github.io/MEITEIGarage/).
+
+A running instance of MEIGarage can be found at [meigarage.edirom.de](https://meigarage.edirom.de/).
 
 # Installation
 
 ## Installing with Docker
 
-With Docker installed, a readymade image can be fetched from the [GitHub Action](https://github.com/Edirom/MEIGarage/blob/main/.github/workflows/docker.yml).
+With Docker installed, a readymade image can be fetched from the [GitHub Container](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage).
 
 `docker pull ghcr.io/edirom/meigarage:latest`
 
@@ -39,6 +43,8 @@ docker run --rm \
 
 Once it's running, you can point your browser at `http://localhost:8080/ege-webservice` for the webservice.
 
+You can also get the development version from DockerHub with `docker pull edirom/meigarage:dev`.
+
 ### available parameters
 
 * **WEBSERVICE_URL** : The full URL of the RESTful *web service*. This is relevant for the *web client* (aka the GUI) if you are running the docker container on a different port or with a different URL.
@@ -47,7 +53,6 @@ Once it's running, you can point your browser at `http://localhost:8080/ege-webs
     -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd`
 
 ### TEI and MEI sources and stylesheets
-
 
 When the docker image is build, the latest releases of the TEI and MEI Sources and Stylesheets are added to the image.
 
@@ -61,7 +66,7 @@ P5 sources you'll need to find the subdirectory which holds the file `p5subset.x
 
 The respective git repositories:
 
-| location on server | data to be added there |
+| location in docker image | data located there |
 | --------------- | --------------- | 
 | /usr/share/xml/tei/stylesheet |  https://github.com/TEIC/Stylesheets/releases/latest | 
 | /usr/share/xml/tei/odd | https://github.com/TEIC/TEI/releases/latest |
@@ -112,7 +117,7 @@ For HTTPS connections behind a
 ### Getting the application packages
 
 The latest released application package (WAR file) is available from the [MEIGarage release page](https://github.com/Edirom/MEIGarage/releases). 
-The latest dev version can be downloaded via [nightly.link](https://nightly.link/) from the [GitHub Action](https://github.com/Edirom/MEIGarage/blob/main/.github/workflows/maven.yml) at [nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip](https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip).
+The latest dev version can be downloaded via [nightly.link](https://nightly.link/) from the [GitHub Action](https://github.com/Edirom/MEIGarage/blob/main/.github/workflows/maven_docker.yml) at [nightly.link/Edirom/MEIGarage/workflows/maven_docker/main/artifact.zip](https://nightly.link/Edirom/MEIGarage/workflows/maven_docker/main/artifact.zip).
 
 The war file could also be build locally, see [Building with Maven](#building-with-maven). 
 
@@ -141,7 +146,9 @@ The MEIGarage Java project can be built with Maven using
 
 `mvn -B package --file pom.xml`
 
-Readymade .war files can be downloaded from the [GitHub Action using nightly.link](https://nightly.link/Edirom/MEIGarage/workflows/maven/main/artifact.zip)
+Readymade .war files can be downloaded from the [GitHub Action using nightly.link](https://nightly.link/Edirom/MEIGarage/workflows/maven_docker/main/artifact.zip). For the required Java version see:
+https://github.com/Edirom/MEIGarage/blob/6f50fdb96300acc3a8e982cae77265d4a9c96c4a/.github/workflows/maven_docker.yml#L21.
+
 
 ## dependencies
 

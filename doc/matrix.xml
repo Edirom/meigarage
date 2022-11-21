@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>MEIGarage Conversion Matrix</title>
+         </titleStmt>
+         <publicationStmt>
+            <authority>infodev@oucs.ox.ac.uk</authority>
+            <date when="2022-09-26"/>
+         </publicationStmt>
+         <sourceDesc>
+            <p>The server at https://meigarage.edirom.de/ege-webservice/</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <table>
+            <head>Scores</head>
+            <row role="label">
+               <cell> Inputs:</cell>
+               <cell n="input" rend="label shaded">LilyPond file (max version 2.20.0)</cell>
+               <cell n="input" rend="label shaded">MARC XML Document</cell>
+               <cell n="input" rend="label shaded">MEI 1.0 (2010) Document</cell>
+               <cell n="input" rend="label shaded">MEI 2.0 (2012) Document</cell>
+               <cell n="input" rend="label shaded">MEI 2.1 (2013) Document</cell>
+               <cell n="input" rend="label shaded">MEI 3.0 (2016) Document</cell>
+               <cell n="input" rend="label shaded">MEI 4.0 (2018) Corpus Document</cell>
+               <cell n="input" rend="label shaded">MEI 4.0 (2018) Document</cell>
+               <cell n="input" rend="label shaded">MusicXML Document (partwise)</cell>
+               <cell n="input" rend="label shaded">MusicXML Document (timewise)</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">PDF Score (LilyPond)</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">Portable Network Graphics (PNG)</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MEI 3.0 (2016) Document</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MEI 4.0 (2018) Document</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">LilyPond Document</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">Musical Instrument Digital Interface (MIDI)</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">PDF Score (Verovio)</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">Scalable Vector Graphic (SVG)</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MEI 2.0 (2012) Document</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MEI 2.1 (2013) Document</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MEI 4.0 (2018) Diff Document</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MusicXML Document (timewise)</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+               <cell> </cell>
+            </row>
+            <row>
+               <cell n="output" role="label" rend="shaded label">MusicXML Document (partwise)</cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell> </cell>
+               <cell rend="grade5 bold">✓</cell>
+            </row>
+         </table>
+      </body>
+   </text>
+</TEI>

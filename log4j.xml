@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
-<log4j:configuration>
-    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ABSOLUTE}
-      %5p %c{1}:%L - %m%n"/>
-        </layout>
-    </appender>
-   <!-- <appender name="debugging-file" class="org.apache.log4j.FileAppender">
-        <param name="file" value="/usr/local/tomcat/logs/debugging.out"/>
-        <param name="immediateFlush" value="true"/>
-        <param name="threshold" value="debug"/>
-        <param name="append" value="false"/>
-
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="conversionPattern" value="%m%n"/>
-        </layout>
-    </appender>-->
-<!--    <root>
-        <priority value="debug"></priority>
-        <appender-ref ref="debugging-file"/>
-    </root>-->
-    <root>
-        <priority value="info"></priority>
-        <appender-ref ref="stdout"/>
-    </root>
-</log4j:configuration>
+<Configuration status="warn">
+  <Properties>
+    <Property name="LOG_DIR">/usr/local/tomcat/logs</Property>
+  </Properties>
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+        <PatternLayout
+                pattern="%d{ABSOLUTE} %-5p %c{1}:%L - %m%n" />
+    </Console>
+    <RollingFile name="rollingFile" fileName="${LOG_DIR}/debugging.out" filePattern="${LOG_DIR}/debugging.%d{dd-MMM}.out.gz" ignoreExceptions="false">
+      <PatternLayout>
+          <Pattern>%m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <OnStartupTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="10MB" />
+        <TimeBasedTriggeringPolicy />
+      </Policies>
+      <DefaultRolloverStrategy max="5" />
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Logger name="de.edirom.meigarage" level="debug" additivity="false">
+      <AppenderRef ref="rollingFile"/>
+    </Logger>
+    <Root level="warn">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="rollingFile"/>
+    </Root>
+  </Loggers>
+</Configuration>

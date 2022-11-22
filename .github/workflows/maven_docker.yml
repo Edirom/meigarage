@@ -28,7 +28,7 @@ jobs:
     - name: Build with Maven
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn clean package --file pom.xml
+      run: sudo mvn clean package --file pom.xml
     - name: Upload Maven build artifact
       uses: actions/upload-artifact@v3
       with:

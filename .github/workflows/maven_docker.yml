@@ -20,7 +20,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: prepare-files
-      run:  cp src/main/webapp/WEB-INF/lib/oxgarage.properties /etc/oxgarage.properties && mkdir -p /var/cache/oxgarage && cp log4j.xml /var/cache/oxgarage/log4j.xml
+      run:  sudo cp src/main/webapp/WEB-INF/lib/oxgarage.properties /etc/oxgarage.properties && sudo mkdir -p /var/cache/oxgarage && sudo cp log4j.xml /var/cache/oxgarage/log4j.xml
     - name: maven-settings
       uses: s4u/maven-settings-action@v2.7.0
       with:

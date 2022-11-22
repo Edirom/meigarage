@@ -23,41 +23,50 @@ public class ValidationServletTest {
     private HttpServletRequest request;
     @Mock
     private HttpServletResponse response;
+    StringWriter sw;
+    PrintWriter pw;
+
 
     @Before
     public void setUp() throws Exception {
         servlet = new ValidationServlet();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-    }
-
-    @Test
-    public void doGet() throws ServletException, IOException {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-
+        sw = new StringWriter();
+        pw = new PrintWriter(sw);
         when(response.getWriter()).thenReturn(pw);
         //mock the value of the request url
         StringBuffer url = new StringBuffer("http://localhost/ege-webservice/Validation/");
         when(request.getRequestURL()).thenReturn(url);
         System.out.println(request.getRequestURL().toString());
+        when(request.getContextPath()).thenReturn("/ege-webservice");
+        System.out.println(request.getContextPath().toString());
+        when(request.getServerName()).thenReturn("localhost");
+        when(request.getServerPort()).thenReturn(80);
+        when(request.getScheme()).thenReturn("http");
+    }
+
+    @Test
+    public void doGet() throws ServletException, IOException {
         servlet.doGet(request, response);
         String result = sw.getBuffer().toString().trim();
         System.out.println(result);
-        assertEquals(result, new String("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<validations xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n" +
-                "<input-data-type id=\"Document formats:EAD,text/xml:EAD,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/EAD%3Atext%3Axml/\" />\n" +
-                "<input-data-type id=\"Document formats:ENRICH,text/xml:ENRICH,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/ENRICH%3Atext%3Axml/\" />\n" +
-                "<input-data-type id=\"Document formats:MASTER,text/xml:MASTER,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MASTER%3Atext%3Axml/\" />\n" +
-                "<input-data-type id=\"Document formats:MEI 4.0,text/xml:MEI 4.0,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0%3Atext%3Axml/\" />\n" +
-                "</validations>"));
+        assertEquals(new String("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<validations xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://localhost/ege-webservice/schemas/validations.xsd\">\n" +
+                "<input-data-type id=\"Document formats:MEI 2.1.1,text/xml:MEI 2.1.1,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+2.1.1%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 3.0.0,text/xml:MEI 3.0.0,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+3.0.0%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 4.0.0,text/xml:MEI 4.0.0,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0.0%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 4.0.1 all any,text/xml:MEI 4.0.1 all any,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0.1+all+any%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 4.0.1 cmn,text/xml:MEI 4.0.1 cmn,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0.1+cmn%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 4.0.1 mensural,text/xml:MEI 4.0.1 mensural,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0.1+mensural%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 4.0.1 neumes,text/xml:MEI 4.0.1 neumes,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0.1+neumes%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI 4.0.1,text/xml:MEI 4.0.1,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+4.0.1%3Atext%3Axml/\" />\n" +
+                "<input-data-type id=\"Document formats:MEI dev,text/xml:MEI dev,text/xml\" xlink:href=\"http://localhost/ege-webservice/Validation/MEI+dev%3Atext%3Axml/\" />\n" +
+                "</validations>"), result);
     }
 
     @Test
-    public void doPost() {
+    public void doPost() throws ServletException, IOException {
     }
 
-    @Test
-    public void printValidationResult() {
-    }
 }

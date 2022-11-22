@@ -19,9 +19,9 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - run: echo "$(github.actor)"
+    - run: echo "${{ github.actor }}"
     - name: prepare-files
-      run:  sudo cp src/main/webapp/WEB-INF/lib/oxgarage.properties /etc/oxgarage.properties && sudo mkdir -p /var/cache/oxgarage && sudo cp log4j.xml /var/cache/oxgarage/log4j.xml && sudo chown -R "$(github.actor)":"$(github.actor)" /var/cache/oxgarage && sudo chown "$(github.actor)":"$(github.actor)"  /etc/oxgarage.properties && sudo mkdir -p /usr/local/tomcat/ && sudo chown "$(github.actor)":"$(github.actor)"  /usr/local/tomcat/
+      run:  sudo cp src/main/webapp/WEB-INF/lib/oxgarage.properties /etc/oxgarage.properties && sudo mkdir -p /var/cache/oxgarage && sudo cp log4j.xml /var/cache/oxgarage/log4j.xml && sudo chown -R "${{ github.actor }}":"${{ github.actor }}" /var/cache/oxgarage && sudo chown "${{ github.actor }}":"${{ github.actor }}"  /etc/oxgarage.properties && sudo mkdir -p /usr/local/tomcat/ && sudo chown "${{ github.actor }}":"${{ github.actor }}"  /usr/local/tomcat/
     - name: maven-settings
       uses: s4u/maven-settings-action@v2.7.0
       with:

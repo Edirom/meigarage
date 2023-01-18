@@ -2,7 +2,7 @@
 
 That's awesome, thank you!
 
-The following is a set of guidelines for contributing to the MerMEId. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to the MEIGarage. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 
 ## I don't want to read this whole thing I just have a question!!!
@@ -33,13 +33,13 @@ git checkout -b issue-33
 With [Docker installed] you simply tell it to build your locally checked out branch ("issue-33") with
 
 ```sh
-docker build --tag mermeid:issue-33 .
+docker build --tag meigarage:issue-33 .
 ```
 
 and then you run it like 
 
 ```sh
-docker run --name mermeid-issue-33 -p 8080:8080 -d mermeid:issue-33
+docker run --name meigarage-issue-33 -p 8080:8080 -d meigarage:issue-33
 ```
 
 ## Make a Pull Request

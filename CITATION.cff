@@ -1,7 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-authors:
 - family-names: "Parkoła"
   given-names: "Tomasz"
 - family-names: "Stanisławczyk"
@@ -28,6 +27,5 @@ authors:
   given-names: "Anne"
 title: "MEIGarage"
 version: 0.5.2
-doi: 
 date-released: 2022-09-08
 url: "https://github.com/Edirom/MEIGarage"

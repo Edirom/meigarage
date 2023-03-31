@@ -30,15 +30,16 @@ A running instance of MEIGarage can be found at [meigarage.edirom.de](https://me
 
 ## Installing with Docker
 
-With Docker installed, a readymade image can be fetched from the [GitHub Container](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage).
+With Docker installed, a readymade image can be fetched from the [GitHub Docker Registry](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage) or [DockerHub](https://hub.docker.com/r/edirom/meigarage).
 
-`docker pull ghcr.io/edirom/meigarage:latest`
+`docker pull ghcr.io/edirom/meigarage:latest` or `docker pull edirom/meigarage:latest`
+
+A container can be run using:
 
 ```bash
 docker run --rm \
     -p 8080:8080 \
-    -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/  \
-    --name meigarage ghcr.io/edirom/meigarage
+    --name meigarage edirom/meigarage:latest
 ```
 
 Once it's running, you can point your browser at `http://localhost:8080/ege-webservice` for the webservice.
@@ -46,8 +47,6 @@ Once it's running, you can point your browser at `http://localhost:8080/ege-webs
 You can also get the development version from DockerHub with `docker pull edirom/meigarage:dev`.
 
 ### available parameters
-
-* **WEBSERVICE_URL** : The full URL of the RESTful *web service*. This is relevant for the *web client* (aka the GUI) if you are running the docker container on a different port or with a different URL.
 
 * **-v** Stylesheet paths : The local path to the stylesheets and sources can be mounted to /usr/share/xml/tei/ using the --volume parameter, using e.g.  `-v /your/path/to/Stylesheets:/usr/share/xml/tei/stylesheet \ 
     -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd`

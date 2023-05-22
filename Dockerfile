@@ -5,7 +5,7 @@
 # of the MEIGarage (backend),
 # and installs it in a Tomcat application server
 #########################################
-FROM tomcat:9-jdk11-openjdk
+FROM tomcat:9-jdk11
 
 
 LABEL org.opencontainers.image.source=https://github.com/edirom/meigarage
@@ -43,6 +43,8 @@ RUN apt-get install -y --no-install-recommends fonts-dejavu \
     librsvg2-bin \
     curl \
     libxml2-utils \
+    unzip \
+    git \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/apt \
     && apt-get clean
@@ -70,7 +72,7 @@ COPY log4j.xml /var/cache/oxgarage/log4j.xml
 # download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
 # the war-file is zipped so we need to unzip it twice at the next stage 
 #conditional copy in docker needs a strange hack
-COPY log4j.xml artifact/meigarage.wa[r] /tmp/
+COPY artifac[t]/meigarage.wa[r] /tmp/
 
 RUN if [ "$BUILDTYPE" = "local" ] ; then \
     curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \

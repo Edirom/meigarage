@@ -70,15 +70,23 @@ COPY docker-entrypoint.sh /my-docker-entrypoint.sh
 COPY log4j.xml /var/cache/oxgarage/log4j.xml
 
 # download artifacts to /tmp and deploy them at ${CATALINA_WEBAPPS}
-# the war-file is zipped so we need to unzip it twice at the next stage 
-#conditional copy in docker needs a strange hack
+
+#if the action is run on github, the war is already located in the artifact folder because of the previous github action
+#RUN if [ "$BUILDTYPE" = "github" ] ; then \
+#    cp artifact/meigarage.war /tmp/; \
+#    fi 
+#need to use strange hack for this conditional copy
 COPY artifac[t]/meigarage.wa[r] /tmp/
 
+# if docker build is local the latest artifact needs to be downloaded using the nightly link url
 RUN if [ "$BUILDTYPE" = "local" ] ; then \
     curl -Ls ${WEBSERVICE_ARTIFACT} -o /tmp/meigarage.zip \
     && unzip -q /tmp/meigarage.zip -d /tmp/; \
-    fi \
-    && unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
+    fi 
+
+# these war-files are zipped so we need to unzip them twice
+# the GUI/webclient needs to be downloaded locally and on github
+RUN unzip -q /tmp/meigarage.war -d ${CATALINA_WEBAPPS}/ege-webservice/ \
     && rm -Rf ${CATALINA_WEBAPPS}/ROOT \
     && cp ${CATALINA_WEBAPPS}/ege-webservice/WEB-INF/lib/oxgarage.properties /etc/ \
     && rm -f /tmp/*.war \

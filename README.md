@@ -11,6 +11,7 @@
 ## Table of Contents
 
 * [About the Project](#about)
+* [How to use](#how-to-use)
 * [Installation](#installation)
     * [With Docker](#installing-with-docker)
     * [Without Docker](#installing-without-docker)
@@ -25,6 +26,14 @@ MEIGarage is based on the proven [OxGarage](https://github.com/TEIC/oxgarage).
 Further information on the *code structure* of MEIGarage and TEIGarage can be found [here](https://github.com/Edirom/MEIGarage/blob/main/doc/code-structure.md). Information in form of *presentation slides* and posters can be found [here](https://anneferger.github.io/MEITEIGarage/).
 
 A running instance of MEIGarage can be found at [meigarage.edirom.de](https://meigarage.edirom.de/).
+
+# How to use
+
+Open API documentation can be found at https://github.com/Edirom/MEIGarage/blob/main/src/main/webapp/openapi.json or at the running instance https://meigarage.edirom.de/ege-webservice/. A curl example call to the API to convert an existing MEI 3.0 document to an MEI 4.0 document looks like
+
+```
+curl  -o 4.0.0.mei -F upload=@input-3.0.0.mei https://meigarage.edirom.de/ege-webservice/Conversions/mei30%3Atext%3Axml/mei40%3Atext%3Axml/
+```
 
 # Installation
 

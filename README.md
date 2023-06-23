@@ -6,6 +6,7 @@
 [![Docker](https://img.shields.io/docker/pulls/edirom/meigarage)](https://hub.docker.com/r/edirom/meigarage)
 [![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8F-yellow)](https://fair-software.eu)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6279/badge)](https://bestpractices.coreinfrastructure.org/projects/6279)
+[![NFDI4C Registry](https://img.shields.io/badge/included%20in%20NFDI4C%20registry-64BEA0 )](https://nfdi4culture.de/resources/registry/details/meigarage)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents

@@ -4,13 +4,15 @@
 [![GitHub license](https://img.shields.io/github/license/teic/TEIGarage.svg)](https://github.com/Edirom/MEIGarage/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/Edirom/MEIGarage.svg)](https://github.com/Edirom/MEIGarage/releases)
 [![Docker](https://img.shields.io/docker/pulls/edirom/meigarage)](https://hub.docker.com/r/edirom/meigarage)
-[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8F-yellow)](https://fair-software.eu)
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F-green)](https://fair-software.eu)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6279/badge)](https://bestpractices.coreinfrastructure.org/projects/6279)
+[![NFDI4C Registry](https://img.shields.io/badge/included%20in%20NFDI4C%20registry-64BEA0 )](https://nfdi4culture.de/resources/registry/details/meigarage)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 * [About the Project](#about)
+* [How to use](#how-to-use)
 * [Installation](#installation)
     * [With Docker](#installing-with-docker)
     * [Without Docker](#installing-without-docker)
@@ -26,19 +28,28 @@ Further information on the *code structure* of MEIGarage and TEIGarage can be fo
 
 A running instance of MEIGarage can be found at [meigarage.edirom.de](https://meigarage.edirom.de/).
 
+# How to use
+
+Open API documentation can be found at https://github.com/Edirom/MEIGarage/blob/main/src/main/webapp/openapi.json or at the running instance https://meigarage.edirom.de/ege-webservice/. A curl example call to the API to convert an existing MEI 3.0 document to an MEI 4.0 document looks like
+
+```
+curl  -o 4.0.0.mei -F upload=@input-3.0.0.mei https://meigarage.edirom.de/ege-webservice/Conversions/mei30%3Atext%3Axml/mei40%3Atext%3Axml/
+```
+
 # Installation
 
 ## Installing with Docker
 
-With Docker installed, a readymade image can be fetched from the [GitHub Container](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage).
+With Docker installed, a readymade image can be fetched from the [GitHub Docker Registry](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage) or [DockerHub](https://hub.docker.com/r/edirom/meigarage).
 
-`docker pull ghcr.io/edirom/meigarage:latest`
+`docker pull ghcr.io/edirom/meigarage:latest` or `docker pull edirom/meigarage:latest`
+
+A container can be run using:
 
 ```bash
 docker run --rm \
     -p 8080:8080 \
-    -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/  \
-    --name meigarage ghcr.io/edirom/meigarage
+    --name meigarage edirom/meigarage:latest
 ```
 
 Once it's running, you can point your browser at `http://localhost:8080/ege-webservice` for the webservice.
@@ -46,8 +57,6 @@ Once it's running, you can point your browser at `http://localhost:8080/ege-webs
 You can also get the development version from DockerHub with `docker pull edirom/meigarage:dev`.
 
 ### available parameters
-
-* **WEBSERVICE_URL** : The full URL of the RESTful *web service*. This is relevant for the *web client* (aka the GUI) if you are running the docker container on a different port or with a different URL.
 
 * **-v** Stylesheet paths : The local path to the stylesheets and sources can be mounted to /usr/share/xml/tei/ using the --volume parameter, using e.g.  `-v /your/path/to/Stylesheets:/usr/share/xml/tei/stylesheet \ 
     -v /your/path/to/TEI/P5:/usr/share/xml/tei/odd`

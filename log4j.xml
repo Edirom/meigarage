@@ -18,14 +18,15 @@
         <TimeBasedTriggeringPolicy />
       </Policies>
       <DefaultRolloverStrategy max="5" />
-    </RollingFile> -->
+    </RollingFile>
   </Appenders>
   <Loggers>
-  <Logger name="debug" level="debug">
+    <Logger name="de.edirom.meigarage" level="debug" additivity="false">
       <AppenderRef ref="rollingFile"/>
     </Logger>
-    <Root level="info" additivity="false">
+    <Root level="warn">
       <AppenderRef ref="console"/>
+      <AppenderRef ref="rollingFile"/>
     </Root>
   </Loggers>
 </Configuration>

@@ -4,13 +4,15 @@
 [![GitHub license](https://img.shields.io/github/license/teic/TEIGarage.svg)](https://github.com/Edirom/MEIGarage/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/Edirom/MEIGarage.svg)](https://github.com/Edirom/MEIGarage/releases)
 [![Docker](https://img.shields.io/docker/pulls/edirom/meigarage)](https://hub.docker.com/r/edirom/meigarage)
-[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8F-yellow)](https://fair-software.eu)
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F-green)](https://fair-software.eu)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6279/badge)](https://bestpractices.coreinfrastructure.org/projects/6279)
+[![NFDI4C Registry](https://img.shields.io/badge/NFDI4Culture%20Registry-64BEA0)](https://nfdi4culture.de/id/E3654)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 * [About the Project](#about)
+* [How to use](#how-to-use)
 * [Installation](#installation)
     * [With Docker](#installing-with-docker)
     * [Without Docker](#installing-without-docker)
@@ -25,6 +27,14 @@ MEIGarage is based on the proven [OxGarage](https://github.com/TEIC/oxgarage).
 Further information on the *code structure* of MEIGarage and TEIGarage can be found [here](https://github.com/Edirom/MEIGarage/blob/main/doc/code-structure.md). Information in form of *presentation slides* and posters can be found [here](https://anneferger.github.io/MEITEIGarage/).
 
 A running instance of MEIGarage can be found at [meigarage.edirom.de](https://meigarage.edirom.de/).
+
+# How to use
+
+Open API documentation can be found at https://github.com/Edirom/MEIGarage/blob/main/src/main/webapp/openapi.json or at the running instance https://meigarage.edirom.de/ege-webservice/. A curl example call to the API to convert an existing MEI 3.0 document to an MEI 4.0 document looks like
+
+```
+curl  -o 4.0.0.mei -F upload=@input-3.0.0.mei https://meigarage.edirom.de/ege-webservice/Conversions/mei30%3Atext%3Axml/mei40%3Atext%3Axml/
+```
 
 # Installation
 

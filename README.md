@@ -226,5 +226,4 @@ The Consortium for Research Data on Material and Immaterial Cultural Heritage (N
 The aim of NFDI4Culture is to establish a demand-oriented infrastructure for research data on material and immaterial cultural assets. This includes 2D digitised reproductions of paintings, photographs and drawings as well as 3D digital models of culturally and historically important buildings, monuments or audiovisual data of music, film and stage performances. Concept and structure of the consortium were developed over two years in an open process and in close cooperation between 11 professional societies, 9 supporting institutions and 52 partners. The consortium addresses the needs of a broad spectrum of disciplines from architecture, art, music, theatre, dance, film and media studies.
 
 [nfdi4culture.de](https://www.nfdi4culture.de)
-
-[![Twitter](https://img.shields.io/twitter/follow/nfdi4culture?style=social)](https://twitter.com/nfdi4culture)
+[NFDI4Culture on Mastodon](https://nfdi.social/@nfdi4culture)

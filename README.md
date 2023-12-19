@@ -6,7 +6,7 @@
 [![Docker](https://img.shields.io/docker/pulls/edirom/meigarage)](https://hub.docker.com/r/edirom/meigarage)
 [![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F-green)](https://fair-software.eu)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6279/badge)](https://bestpractices.coreinfrastructure.org/projects/6279)
-[![NFDI4C Registry](https://img.shields.io/badge/included%20in%20NFDI4C%20registry-64BEA0 )](https://nfdi4culture.de/resources/registry/details/meigarage)
+[![NFDI4C Registry](https://img.shields.io/badge/NFDI4Culture%20Registry-64BEA0)](https://nfdi4culture.de/id/E3654)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -226,5 +226,4 @@ The Consortium for Research Data on Material and Immaterial Cultural Heritage (N
 The aim of NFDI4Culture is to establish a demand-oriented infrastructure for research data on material and immaterial cultural assets. This includes 2D digitised reproductions of paintings, photographs and drawings as well as 3D digital models of culturally and historically important buildings, monuments or audiovisual data of music, film and stage performances. Concept and structure of the consortium were developed over two years in an open process and in close cooperation between 11 professional societies, 9 supporting institutions and 52 partners. The consortium addresses the needs of a broad spectrum of disciplines from architecture, art, music, theatre, dance, film and media studies.
 
 [nfdi4culture.de](https://www.nfdi4culture.de)
-
-[![Twitter](https://img.shields.io/twitter/follow/nfdi4culture?style=social)](https://twitter.com/nfdi4culture)
+[NFDI4Culture on Mastodon](https://nfdi.social/@nfdi4culture)

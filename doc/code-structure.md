@@ -11,8 +11,8 @@ The code is structured in a base and various plugins (currently following the [J
 # How does the XGarage work
 
 The program is divided into different parts: main project, API, framework, plug-ins (validators, converters, customizations) and web client. 
-![Overview of structure](https://anneferger.github.io/MEITEIGarage/TEIMEC23/images/structure.png "Overview of structure")
 
+<img src="https://anneferger.github.io/MEITEIGarage/TEIMEC23/images/structure.png" alt="Overview of code structure" width="500">
 
 ## Main projects
 
@@ -63,6 +63,30 @@ The last important part of OxGarage is the web client. This is basically a user 
 # How to add new conversions
 
 Adding new conversions can be done in two different ways. You can either build a new converter, or add new conversions into existing converters. Adding new conversions is rather different in each converter and you can find very brief instructions in the next sections. After you have added the format, you will also need to add new mime-type and extension pair into fileExt.xml file in the web service directory. It is strongly advised to use the same format description, format name and format mime-type for one document format, in case it is defined in several converters.
+
+## Adding new plugins
+Currently the garages work with converter, customization and validation plugins. To add a new conversion or validation a new java maven project needs to be created and used as a dependency in the main configuration project (currently [MEIGarage](https://github.com/Edirom/MEIGarage) or [TEIGarage](https://github.com/TEIC/TEIGarage), see above). The new project needs to include:
+
+### plugin.xml
+
+src/main/resources/META-INF/plugin.xml
+```
+<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 0.4" "http://jpf.sourceforge.net/plugin_0_7.dtd">
+<plugin id="meico-converter" version="0.1">
+    <requires>
+        <import plugin-id="pl.psnc.dl.ege.root"/>
+    </requires>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="Converter" id="MeicoConverter">
+        <parameter id="class" value="de.edirom.meigarage.meico.MeicoConverter"/>
+        <parameter id="name" value="Meico Converter"/>
+    </extension>
+</plugin>
+```
+
+### Class implementing the converter class pl.psnc.dl.ege.component.Converter
+
+`public class FooConverter implements Converter,ErrorHandler`
 
 ## Adding new conversions to XslConverter
 

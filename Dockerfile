@@ -50,7 +50,7 @@ RUN apt-get install -y --no-install-recommends fonts-dejavu \
     && apt-get clean
 
 # install lilypond-converter dependencies
-ADD  https://github.com/Edirom/lilypond-converter/blob/main/required.sh /tmp/required-lilypond-converter.sh
+ADD  https://github.com/Edirom/lilypond-converter/raw/main/required.sh /tmp/required-lilypond-converter.sh
 RUN chmod a+x /tmp/required-lilypond-converter.sh \
     && /tmp/required-lilypond-converter.sh --batch
     

@@ -49,11 +49,11 @@ RUN apt-get install -y --no-install-recommends fonts-dejavu \
     && rm -rf /var/cache/apt \
     && apt-get clean
 
-# installs lilypond into /usr/local/lilypond and /usr/local/bin as shortcut
-ADD https://lilypond.org/download/binaries/linux-64/lilypond-2.20.0-1.linux-64.sh /tmp/lilypond.sh
-RUN chmod a+x /tmp/lilypond.sh \
-    && /tmp/lilypond.sh --batch
-
+# install lilypond-converter dependencies
+ADD  https://github.com/Edirom/lilypond-converter/raw/main/required.sh /tmp/required-lilypond-converter.sh
+RUN chmod a+x /tmp/required-lilypond-converter.sh \
+    && /tmp/required-lilypond-converter.sh --batch
+    
 # clone and run
 RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/verovio \
     && cd /tmp/verovio/tools \

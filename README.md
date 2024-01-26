@@ -41,7 +41,7 @@ curl  -o 4.0.0.mei -F upload=@input-3.0.0.mei https://meigarage.edirom.de/ege-we
 
 ## Installing with Docker
 
-With Docker installed, a readymade image can be fetched from the [GitHub Docker Registry](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage) or [DockerHub](https://hub.docker.com/r/edirom/meigarage).
+With Docker installed, a readymade image can be fetched from the [GitHub Docker Registry](https://github.com/Edirom/MEIGarage/pkgs/container/meigarage) or [DockerHub](https://hub.docker.com/r/edirom/meigarage). For the frontend see [ViFE mMeigarage Webclient](https://github.com/Edirom/vife-meigarage-webclient).
 
 `docker pull ghcr.io/edirom/meigarage:latest` or `docker pull edirom/meigarage:latest`
 

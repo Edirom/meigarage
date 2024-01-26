@@ -193,7 +193,7 @@
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-xsl-converter</artifactId>
-      <version>0.2.3</version>
+      <version>0.3.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

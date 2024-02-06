@@ -195,6 +195,13 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && cp -r /tmp/mei401/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei401 \
     && rm -r /tmp/mei401 \
     && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei401/source/mei-source_canonicalized.xml \
+    && curl -s -L -o /tmp/mei500.zip https://github.com/music-encoding/music-encoding/archive/refs/tags/v5.0.zip \
+    && unzip /tmp/mei500.zip -d /tmp/mei500 \
+    && rm /tmp/mei500.zip \
+    && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/mei500 \
+    && cp -r /tmp/mei500/*/*  ${MEI_SOURCES_HOME}/music-encoding/mei500 \
+    && rm -r /tmp/mei500 \
+    && xmllint -xinclude ${MEI_SOURCES_HOME}/music-encoding/mei500/source/specs/mei-source.xml -o ${MEI_SOURCES_HOME}/music-encoding/mei500/source/mei-source_canonicalized.xml \    
     && git clone --depth 1 -b develop https://github.com/music-encoding/music-encoding /tmp/meidev \
     && cd /tmp/meidev \
     && git rev-parse HEAD > /tmp/meidev/GITHASH \

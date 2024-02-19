@@ -193,7 +193,7 @@
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-xsl-converter</artifactId>
-      <version>0.2.3</version>
+      <version>0.3.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -205,7 +205,7 @@
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-validator</artifactId>
-      <version>0.3.2</version>
+      <version>0.4.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -217,7 +217,7 @@
     <dependency>
       <groupId>de.edirom.meigarage</groupId>
       <artifactId>mei-customization</artifactId>
-      <version>0.6.3</version>
+      <version>0.7.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

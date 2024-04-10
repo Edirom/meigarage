@@ -57,7 +57,7 @@ RUN chmod a+x /tmp/required-lilypond-converter.sh \
 # install verovio-converter dependencies
 ADD  https://github.com/Edirom/verovio-converter/raw/main/required.sh /tmp/required-verovio-converter.sh
 RUN chmod a+x /tmp/required-verovio-converter.sh \
-    && /tmp/verovio-converter.sh --batch
+    && /tmp/required-verovio-converter.sh --batch
 
 # entrypoint script
 COPY docker-entrypoint.sh /my-docker-entrypoint.sh

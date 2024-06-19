@@ -54,14 +54,10 @@ ADD  https://github.com/Edirom/lilypond-converter/raw/main/required.sh /tmp/requ
 RUN chmod a+x /tmp/required-lilypond-converter.sh \
     && /tmp/required-lilypond-converter.sh --batch
     
-# clone and run
-RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/verovio \
-    && cd /tmp/verovio/tools \
-    && cmake ../cmake \
-    && make -j 8 \
-    && make install \
-    && cp /tmp/verovio/fonts/Leipzig/Leipzig.ttf /usr/local/share/fonts/ \
-    && fc-cache
+# install verovio-converter dependencies
+ADD  https://github.com/Edirom/verovio-converter/raw/main/required.sh /tmp/required-verovio-converter.sh
+RUN chmod a+x /tmp/required-verovio-converter.sh \
+    && /tmp/required-verovio-converter.sh --batch
 
 # entrypoint script
 COPY docker-entrypoint.sh /my-docker-entrypoint.sh

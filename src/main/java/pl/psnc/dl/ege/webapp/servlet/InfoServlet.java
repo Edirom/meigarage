@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pl.psnc.dl.ege.webapp.servlethelpers.Info;
 
 import javax.servlet.ServletException;
@@ -24,6 +26,7 @@ import java.io.IOException;
         @Tag(name = "ege-webservice", description = "Conversion, Validation and Customization")
 })
 public class InfoServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(InfoServlet.class);
     Info info = new Info();
     @Override
     @GET
@@ -39,6 +42,7 @@ public class InfoServlet extends HttpServlet {
     })
     public void doGet(@Parameter(hidden = true) HttpServletRequest request, @Parameter(hidden = true) HttpServletResponse response)
             throws IOException, ServletException {
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
         info.doGetHelper(request, response, this);
     }
 

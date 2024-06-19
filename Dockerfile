@@ -131,7 +131,7 @@ RUN if [ "$VERSION_ODD" = "latest" ] ; then \
 #    && rm -r /tmp/encoding
 #clone the latest version of https://github.com/music-encoding/encoding-tools/
 RUN git clone --depth 1 -b main https://github.com/music-encoding/encoding-tools /tmp/encoding \
-    && cd /tmp/encoding    
+    && cd /tmp/encoding \   
     && git rev-parse HEAD > /tmp/encoding/GITHASH \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
     && cp -r /tmp/encoding/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \

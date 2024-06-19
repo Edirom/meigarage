@@ -209,7 +209,7 @@
     <dependency>
       <groupId>pl.psnc.dl.ege</groupId>
       <artifactId>ege-framework</artifactId>
-      <version>0.5.3</version>
+      <version>0.5.5</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pl.psnc.dl.ege.webapp.servlethelpers.Info;
 
 import javax.servlet.ServletException;
@@ -39,7 +41,7 @@ public class InfoServlet extends HttpServlet {
     })
     public void doGet(@Parameter(hidden = true) HttpServletRequest request, @Parameter(hidden = true) HttpServletResponse response)
             throws IOException, ServletException {
-        info.doGetHelper(request, response, this);
+       info.doGetHelper(request, response, this);
     }
 
 }

@@ -54,14 +54,10 @@ ADD  https://github.com/Edirom/lilypond-converter/raw/main/required.sh /tmp/requ
 RUN chmod a+x /tmp/required-lilypond-converter.sh \
     && /tmp/required-lilypond-converter.sh --batch
     
-# clone and run
-RUN git clone --depth 1 -b master https://github.com/rism-digital/verovio /tmp/verovio \
-    && cd /tmp/verovio/tools \
-    && cmake ../cmake \
-    && make -j 8 \
-    && make install \
-    && cp /tmp/verovio/fonts/Leipzig/Leipzig.ttf /usr/local/share/fonts/ \
-    && fc-cache
+# install verovio-converter dependencies
+ADD  https://github.com/Edirom/verovio-converter/raw/main/required.sh /tmp/required-verovio-converter.sh
+RUN chmod a+x /tmp/required-verovio-converter.sh \
+    && /tmp/required-verovio-converter.sh --batch
 
 # entrypoint script
 COPY docker-entrypoint.sh /my-docker-entrypoint.sh
@@ -135,6 +131,8 @@ RUN if [ "$VERSION_ODD" = "latest" ] ; then \
 #    && rm -r /tmp/encoding
 #clone the latest version of https://github.com/music-encoding/encoding-tools/
 RUN git clone --depth 1 -b main https://github.com/music-encoding/encoding-tools /tmp/encoding \
+    && cd /tmp/encoding \   
+    && git rev-parse HEAD > /tmp/encoding/GITHASH \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
     && cp -r /tmp/encoding/*  ${MEI_SOURCES_HOME}/music-stylesheets/encoding-tools \
     && rm -r /tmp/encoding
@@ -207,7 +205,7 @@ RUN curl -s -L -o /tmp/mei200.zip https://github.com/music-encoding/music-encodi
     && git rev-parse HEAD > /tmp/meidev/GITHASH \
     && mkdir -p  ${MEI_SOURCES_HOME}/music-encoding/meidev \
     && cp -r /tmp/meidev/*  ${MEI_SOURCES_HOME}/music-encoding/meidev \
-    && curl -s -L -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml https://raw.githubusercontent.com/music-encoding/schema/main/dev/mei-source_canonicalized.xml \
+    && curl -s -L -o ${MEI_SOURCES_HOME}/music-encoding/meidev/source/mei-source_canonicalized.xml https://raw.githubusercontent.com/music-encoding/schema/main/dev/mei-source_canonicalized_v5.1-dev.xml \
     && rm -r /tmp/meidev
 
 #https://github.com/Edirom/data-configuration - no releases, clone most recent version in dev branch and move to correct folder

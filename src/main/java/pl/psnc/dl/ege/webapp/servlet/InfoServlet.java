@@ -26,7 +26,6 @@ import java.io.IOException;
         @Tag(name = "ege-webservice", description = "Conversion, Validation and Customization")
 })
 public class InfoServlet extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(InfoServlet.class);
     Info info = new Info();
     @Override
     @GET
@@ -42,8 +41,7 @@ public class InfoServlet extends HttpServlet {
     })
     public void doGet(@Parameter(hidden = true) HttpServletRequest request, @Parameter(hidden = true) HttpServletResponse response)
             throws IOException, ServletException {
-        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
-        info.doGetHelper(request, response, this);
+       info.doGetHelper(request, response, this);
     }
 
 }

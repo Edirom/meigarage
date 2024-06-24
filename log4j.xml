@@ -24,6 +24,9 @@
     <Logger name="de.edirom.meigarage" level="debug" additivity="false">
       <AppenderRef ref="rollingFile"/>
     </Logger>
+    <Logger name="pl.psnc.dl.ege" level="debug" additivity="false">     
+      <AppenderRef ref="rollingFile"/>
+    </Logger>
     <Root level="warn">
       <AppenderRef ref="console"/>
       <AppenderRef ref="rollingFile"/>

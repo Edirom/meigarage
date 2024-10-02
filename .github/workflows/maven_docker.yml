@@ -107,7 +107,7 @@ jobs:
         with:
           package: meigarage
           delete-untagged: true
-          dry-run: true
+          dry-run: false
           validate: true
           older-than: 2 weeks
           token: ${{ secrets.GITHUB_TOKEN }}

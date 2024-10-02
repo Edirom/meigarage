@@ -105,6 +105,7 @@ jobs:
       - name: ghcr.io cleanup action
         uses: dataaxiom/ghcr-cleanup-action@v1
         with:
+          package: meigarage
           delete-untagged: true
           dry-run: true
           validate: true
